@@ -1,15 +1,23 @@
 ---
+import LanguageSwitch from "./LanguageSwitch.astro";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const homePath = getLocalizedPath("/", lang);
+
 const links = [
-  { href: "#about", label: "Über uns" },
-  { href: "#values", label: "Werte" },
-  { href: "#contact", label: "Kontakt" },
+  { href: homePath, label: t("nav.home") },
+  { href: getLocalizedPath("/kollektionen", lang), label: t("nav.collections") },
+  { href: `${homePath}#about`, label: t("nav.about") },
+  { href: `${homePath}#contact`, label: t("nav.contact") },
 ];
 ---
 
 <header class="sticky top-0 z-50 border-b border-white/10 bg-ink-900/80 backdrop-blur">
-  <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-    <a href="#" class="text-lg font-bold tracking-tight text-white">
-      HEART<span class="text-brand-400">&</span>SOUL
+  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
+    <a href={homePath} class="text-white" aria-label="HEART&SOUL">
+      <img src="/heartandsoul-logo.svg" alt="HEART&SOUL" class="h-9 w-auto" />
     </a>
     <ul class="hidden gap-8 text-sm font-medium text-white/70 sm:flex">
       {links.map((link) => (
@@ -18,11 +26,14 @@ const links = [
         </li>
       ))}
     </ul>
-    <a
-      href="#contact"
-      class="rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-500"
-    >
-      Kontakt aufnehmen
-    </a>
+    <div class="flex items-center gap-3">
+      <LanguageSwitch />
+      <a
+        href={`${homePath}#contact`}
+        class="rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-500"
+      >
+        {t("nav.cta")}
+      </a>
+    </div>
   </nav>
 </header>

@@ -1,4 +1,8 @@
 ---
+import { getLangFromUrl, useTranslations } from "../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section class="relative overflow-hidden px-6 pt-20 pb-24 sm:pt-28 sm:pb-32">
@@ -8,27 +12,26 @@
   </div>
   <div class="mx-auto max-w-3xl text-center">
     <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-brand-400">
-      HEART&amp;SOUL
+      {t("hero.eyebrow")}
     </p>
     <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-      Mit Herz und Verstand gemacht
+      {t("hero.title")}
     </h1>
     <p class="mx-auto mt-6 max-w-xl text-lg text-white/70">
-      Zwei Worte, eine Haltung: ehrliche Arbeit, die man spürt —
-      sorgfältig gedacht und mit Liebe zum Detail umgesetzt.
+      {t("hero.subtitle")}
     </p>
     <div class="mt-10 flex justify-center gap-4">
       <a
         href="#about"
         class="rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-500"
       >
-        Mehr erfahren
+        {t("hero.ctaPrimary")}
       </a>
       <a
         href="#contact"
         class="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
       >
-        Kontakt
+        {t("hero.ctaSecondary")}
       </a>
     </div>
   </div>

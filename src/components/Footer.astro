@@ -1,10 +1,32 @@
 ---
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-white/10 px-6 py-10">
   <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-white/50 sm:flex-row">
-    <p>&copy; {year} HEART&amp;SOUL. Alle Rechte vorbehalten.</p>
-    <p>Made with Astro &amp; Tailwind CSS.</p>
+    <p class="flex items-center gap-2">
+      <img src="/heartandsoul-logo.svg" alt="HEART&SOUL" class="h-4 w-auto opacity-50" />
+      <span>&copy; {year}. {t("footer.rights")}</span>
+    </p>
+    <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+      <a href={getLocalizedPath("/impressum", lang)} class="transition hover:text-white/80">
+        {t("footer.impressum")}
+      </a>
+      <a href={getLocalizedPath("/datenschutz", lang)} class="transition hover:text-white/80">
+        {t("footer.datenschutz")}
+      </a>
+      <button
+        type="button"
+        class="transition hover:text-white/80"
+        onclick="window.dispatchEvent(new CustomEvent('cookie-consent:open'))"
+      >
+        {t("footer.cookieSettings")}
+      </button>
+    </nav>
+    <p>{t("footer.madeWith")}</p>
   </div>
 </footer>

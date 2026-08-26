@@ -1,0 +1,14 @@
+---
+import { languages, getLangFromUrl, getLocalizedPath, type Lang } from "../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const otherLang: Lang = lang === "de" ? "en" : "de";
+const otherPath = getLocalizedPath(Astro.url.pathname, otherLang);
+---
+
+<a
+  href={otherPath}
+  class="rounded-full border border-white/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white/70 transition hover:border-white/40 hover:text-white"
+>
+  {languages[otherLang]}
+</a>
