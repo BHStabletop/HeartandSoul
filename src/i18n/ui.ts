@@ -69,6 +69,15 @@ export const ui = {
     "collections.subtitle":
       "Jede HEART&SOUL-Kollektion hat ihren eigenen Charakter. Ein Klick führt dich zur jeweiligen Kollektion auf bhs-tabletop.com.",
     "collections.cta": "Zur Kollektion",
+
+    "instagram.eyebrow": "Community",
+    "instagram.title": "#MyHeartAndSoulMoment",
+    "instagram.subtitle":
+      "Momente unserer Community mit HEART&SOUL — direkt von @bhs.tabletop auf Instagram.",
+    "instagram.loading": "Beiträge werden geladen …",
+    "instagram.empty": "Aktuell sind keine Beiträge mit #MyHeartAndSoulMoment verfügbar.",
+    "instagram.error": "Instagram-Beiträge konnten gerade nicht geladen werden.",
+    "instagram.cta": "Mehr auf Instagram ansehen",
   },
   en: {
     "site.title": "HEART&SOUL",
@@ -130,6 +139,14 @@ export const ui = {
     "collections.subtitle":
       "Every HEART&SOUL collection has its own character. Click through to see it on bhs-tabletop.com.",
     "collections.cta": "View collection",
+
+    "instagram.eyebrow": "Community",
+    "instagram.title": "#MyHeartAndSoulMoment",
+    "instagram.subtitle": "Community moments with HEART&SOUL — straight from @bhs.tabletop on Instagram.",
+    "instagram.loading": "Loading posts …",
+    "instagram.empty": "No posts with #MyHeartAndSoulMoment are available right now.",
+    "instagram.error": "Instagram posts couldn't be loaded right now.",
+    "instagram.cta": "See more on Instagram",
   },
 } as const;
 
