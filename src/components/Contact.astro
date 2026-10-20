@@ -1,24 +1,37 @@
 ---
+import Button from "./hso/Button.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/ui";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="contact" class="border-t border-white/10 px-6 py-24">
-  <div class="mx-auto max-w-2xl text-center">
-    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-400">{t("contact.eyebrow")}</p>
-    <h2 class="mt-4 text-3xl font-bold text-white sm:text-4xl">
-      {t("contact.title")}
-    </h2>
-    <p class="mx-auto mt-4 max-w-md text-white/70">
-      {t("contact.subtitle")}
-    </p>
-    <a
-      href={`mailto:${t("contact.email")}`}
-      class="mt-8 inline-block rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-500"
-    >
-      {t("contact.email")}
-    </a>
-  </div>
+<section id="contact" class="hso-section hso-contact">
+  <h2>{t("contact.title")}</h2>
+  <p>{t("contact.subtitle")}</p>
+  <Button href={`mailto:${t("contact.email")}`} minWidth={240}>{t("contact.email")}</Button>
 </section>
+
+<style>
+  .hso-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 26px;
+  }
+  .hso-contact h2 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+  }
+  .hso-contact p {
+    max-width: 500px;
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
+    margin: 0;
+  }
+</style>

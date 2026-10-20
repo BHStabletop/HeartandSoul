@@ -1,0 +1,22 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import CollectionDetail from "../../../components/CollectionDetail.astro";
+import { collections } from "../../../data/collections";
+
+export function getStaticPaths() {
+  return collections.map((c) => ({ params: { slug: c.slug }, props: { collection: c } }));
+}
+
+const { collection } = Astro.props;
+const name = collection.name;
+---
+
+<Layout title={`${name} — HEART&SOUL`} description={collection.descriptionEn}>
+  <Header />
+  <main>
+    <CollectionDetail slug={collection.slug} />
+  </main>
+  <Footer />
+</Layout>

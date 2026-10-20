@@ -1,32 +1,181 @@
 ---
 import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
+import { getBlob } from "./hso/blobs";
+
+interface Props {
+  /** Show the blob with a crop of the table just above the footer.
+   *  Enabled on the homepage only; other pages get the plain mint footer. */
+  mood?: boolean;
+}
+
+const { mood = false } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const year = new Date().getFullYear();
+
+const blob = getBlob("wide");
+const blobId = `hso-footer-blob-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<footer class="border-t border-white/10 px-6 py-10">
-  <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-white/50 sm:flex-row">
-    <p class="flex items-center gap-2">
-      <img src="/heartandsoul-logo.svg" alt="HEART&SOUL" class="h-4 w-auto opacity-50" />
-      <span>&copy; {year}. {t("footer.rights")}</span>
-    </p>
-    <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-      <a href={getLocalizedPath("/impressum", lang)} class="transition hover:text-white/80">
-        {t("footer.impressum")}
+{mood && (
+  <div class="hso-footer-blob" aria-hidden="true">
+    <svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden">
+      <defs>
+        <clipPath id={blobId} clipPathUnits="objectBoundingBox"><path d={blob.nd} /></clipPath>
+      </defs>
+    </svg>
+    <div class="hso-footer-blob__shape" style={{ clipPath: `url(#${blobId})`, WebkitClipPath: `url(#${blobId})` }}>
+      <img src="/footer-mood.jpg" alt="" loading="lazy" />
+    </div>
+  </div>
+)}
+
+<footer class:list={["hso-footer", { "hso-footer--mood": mood }]}>
+  <div class="hso-footer__inner">
+    <img src="/heartandsoul-logo.svg" alt="HEART&SOUL" width="170" height="69" class="hso-footer__logo" />
+
+    <div class="hso-footer__insta">
+      <div class="hso-footer__handle">
+        <img src="/hso/icons/instagram.svg" alt="" width="24" height="24" />
+        <span>{t("footer.instagramHandle")}</span>
+      </div>
+      <a href="https://www.instagram.com/bhs.tabletop/" target="_blank" rel="noopener noreferrer" class="hso-btn hso-btn--secondary">
+        {t("footer.instagramCta")}
+        <svg width="22" height="10" viewBox="0 0 26 12" fill="none" aria-hidden="true">
+          <path d="M1 6h22M18.5 1.5 23.5 6l-5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
       </a>
-      <a href={getLocalizedPath("/datenschutz", lang)} class="transition hover:text-white/80">
-        {t("footer.datenschutz")}
-      </a>
-      <button
-        type="button"
-        class="transition hover:text-white/80"
-        onclick="window.dispatchEvent(new CustomEvent('cookie-consent:open'))"
-      >
+    </div>
+
+    <nav class="hso-footer__links">
+      <a href={`${getLocalizedPath("/", lang)}#contact`} class="hso-footer__link">{t("nav.contact")}</a>
+      <a href={getLocalizedPath("/impressum", lang)} class="hso-footer__link">{t("footer.impressum")}</a>
+      <a href={getLocalizedPath("/datenschutz", lang)} class="hso-footer__link">{t("footer.datenschutz")}</a>
+      <button type="button" class="hso-footer__link hso-footer__link--btn" onclick="window.dispatchEvent(new CustomEvent('cookie-consent:open'))">
         {t("footer.cookieSettings")}
       </button>
     </nav>
-    <p>{t("footer.madeWith")}</p>
+
+    <p class="hso-footer__copy">&copy;{year} BHS tabletop AG</p>
   </div>
 </footer>
+
+<style>
+  /* ---------- Blob with a table crop (homepage only) ---------- */
+  /* An organic blob at the lower-left, just above the footer, sitting on the
+     green page background and showing a cropped detail of the breakfast table. */
+  .hso-footer-blob {
+    position: relative;
+    z-index: 1;
+    padding-left: clamp(16px, 4vw, 64px);
+    margin-bottom: clamp(-70px, -6vw, -36px);
+  }
+  .hso-footer-blob__shape {
+    /* ~2/3 of the page wide, but kept to roughly the previous height so it
+       grows sideways only (the clip-path scales to the box). */
+    width: min(66vw, 940px);
+    height: clamp(200px, 31vw, 340px);
+    overflow: hidden;
+    background: var(--surface-blob);
+  }
+  .hso-footer-blob__shape img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 45%;
+    display: block;
+  }
+
+  /* ---------- Mint footer (all pages) ---------- */
+  .hso-footer {
+    position: relative;
+    background: var(--hso-green-light);
+    border-radius: 42% 58% 0 0 / 15% 22% 0 0;
+    padding: clamp(64px, 8vw, 104px) clamp(24px, 6vw, 96px) clamp(40px, 5vw, 56px);
+  }
+  .hso-footer__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    gap: 40px;
+    justify-items: center;
+    text-align: center;
+  }
+  .hso-footer__logo {
+    display: block;
+    height: auto;
+    width: clamp(140px, 16vw, 190px);
+  }
+  .hso-footer__insta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .hso-footer__handle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-core);
+    font-weight: var(--fw-core-semi);
+    font-size: var(--type-nav-size);
+    color: var(--hso-white);
+  }
+  /* Recolour the instagram glyph to white to match the handle text. */
+  .hso-footer__handle img {
+    filter: brightness(0) invert(1);
+  }
+  .hso-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px 30px;
+  }
+  .hso-footer__link {
+    font-family: var(--font-core);
+    font-weight: var(--fw-core-semi);
+    font-size: var(--type-nav-size);
+    color: var(--hso-green-deep);
+    text-decoration: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .hso-footer__link:hover {
+    opacity: 0.75;
+  }
+  .hso-footer__copy {
+    font-family: var(--font-core);
+    font-weight: var(--fw-core-light);
+    font-size: var(--type-body-size);
+    color: var(--hso-green-deep);
+    opacity: 0.75;
+  }
+
+  @media (min-width: 900px) {
+    .hso-footer__inner {
+      grid-template-columns: auto 1fr auto;
+      justify-items: start;
+      text-align: left;
+      align-items: center;
+      column-gap: 48px;
+    }
+    .hso-footer__insta {
+      align-items: center;
+    }
+    .hso-footer__links {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .hso-footer__copy {
+      grid-column: 1 / -1;
+      justify-self: end;
+      text-align: right;
+      margin-top: 8px;
+    }
+  }
+</style>

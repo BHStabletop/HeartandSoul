@@ -1,0 +1,12 @@
+<?xml version="1.0"?><svg id="Ebene_2" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 82.59 82.59">
+  <g id="Ebene_1-2">
+    <g>
+      <circle cx="41.3" cy="41.3" r="40.3" fill="#a3c994"></circle>
+      <path d="M62.18,49.75c.3.53.45,1.08.45,1.64,0,4.5-9.98,8.15-22.3,8.15s-22.3-3.65-22.3-8.15c0-.49.12-.97.34-1.43" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></path>
+      <path d="M62.18,43.85c.3.53.45,1.08.45,1.64,0,4.5-9.98,8.15-22.3,8.15s-22.3-3.65-22.3-8.15c0-.49.12-.97.34-1.43" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></path>
+      <path d="M62.18,37.96c.3.53.45,1.08.45,1.64,0,4.5-9.98,8.15-22.3,8.15s-22.3-3.65-22.3-8.15c0-.49.12-.97.34-1.43" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></path>
+      <ellipse cx="40.33" cy="33.37" rx="22.3" ry="8.15" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></ellipse>
+      <path d="M24.12,34.37c0-2.94,7.26-5.33,16.22-5.33s16.22,2.39,16.22,5.33" fill="none" stroke="#4d7d59" stroke-miterlimit="10"></path>
+    </g>
+  </g>
+</svg>

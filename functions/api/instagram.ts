@@ -1,7 +1,6 @@
 interface Env {
   IG_ACCESS_TOKEN: string;
   IG_BUSINESS_ID: string;
-  IG_TARGET_USERNAME?: string;
   IG_HASHTAG?: string;
 }
 
@@ -28,15 +27,16 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, request }) => {
     return jsonResponse({ error: "not_configured", posts: [] }, 501);
   }
 
-  const targetUsername = env.IG_TARGET_USERNAME || "bhs.tabletop";
   const hashtag = (env.IG_HASHTAG || "MyHeartAndSoulMoment").replace(/^#/, "").toLowerCase();
 
-  const fields =
-    `business_discovery.username(${targetUsername})` +
-    `{media.limit(50){id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,like_count,comments_count}}`;
+  // Fetch the linked account's own media directly. The IG_BUSINESS_ID account is
+  // owned by us (connected via its Facebook Page), so instagram_basic is enough —
+  // no business_discovery (that is only for other people's public accounts and
+  // needs a separate, approved app permission).
+  const fields = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,like_count,comments_count";
   const apiUrl =
-    `https://graph.facebook.com/v21.0/${env.IG_BUSINESS_ID}` +
-    `?fields=${encodeURIComponent(fields)}&access_token=${encodeURIComponent(env.IG_ACCESS_TOKEN)}`;
+    `https://graph.facebook.com/v21.0/${env.IG_BUSINESS_ID}/media` +
+    `?fields=${encodeURIComponent(fields)}&limit=50&access_token=${encodeURIComponent(env.IG_ACCESS_TOKEN)}`;
 
   let upstream: Response;
   try {
@@ -50,7 +50,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, request }) => {
   }
 
   const data: any = await upstream.json();
-  const allMedia: InstagramMedia[] = data?.business_discovery?.media?.data ?? [];
+  const allMedia: InstagramMedia[] = data?.data ?? [];
 
   const posts = allMedia
     .filter((m) => typeof m.caption === "string" && m.caption.toLowerCase().includes(`#${hashtag}`))
@@ -65,7 +65,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, request }) => {
       commentsCount: m.comments_count ?? null,
     }));
 
-  const response = jsonResponse({ posts, username: targetUsername, hashtag }, 200, {
+  const response = jsonResponse({ posts, hashtag }, 200, {
     "cache-control": "public, max-age=900",
   });
 

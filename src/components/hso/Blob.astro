@@ -1,0 +1,45 @@
+---
+import { getBlob, type BlobShape } from "./blobs";
+
+interface Props {
+  shape?: BlobShape;
+  width?: number | string;
+  height?: number | string;
+  color?: string;
+  rotate?: number;
+  class?: string;
+}
+
+const { shape = "medium", width, height, color = "var(--surface-blob)", rotate = 0, class: className } = Astro.props;
+
+const s = getBlob(shape);
+const w = width != null ? Number(width) : s.vw;
+const h = height != null ? Number(height) : (w / s.vw) * s.vh;
+const id = `hso-blob-${shape}-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div
+  class:list={["hso-blob", className]}
+  style={{ position: "relative", width: `${w}px`, height: `${h}px`, transform: rotate ? `rotate(${rotate}deg)` : undefined }}
+>
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <clipPath id={id} clipPathUnits="objectBoundingBox"><path d={s.nd} /></clipPath>
+    </defs>
+  </svg>
+  <div style={{ position: "absolute", inset: 0, background: color, clipPath: `url(#${id})`, WebkitClipPath: `url(#${id})` }}>
+  </div>
+  <div class="hso-blob__content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .hso-blob__content {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+</style>

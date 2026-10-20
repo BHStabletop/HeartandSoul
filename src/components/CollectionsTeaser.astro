@@ -1,0 +1,37 @@
+---
+import CollectionCard from "./hso/CollectionCard.astro";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const teaser = [
+  { name: "Mirage", slug: "mirage", image: "/collections/mirage.png" },
+  { name: "Flow", slug: "flow", image: "/collections/flow.png" },
+  { name: "Pine", slug: "pine", image: "/collections/pine.png" },
+];
+const kollektionenPath = getLocalizedPath("/kollektionen", lang);
+---
+
+<section class="hso-section hso-teaser">
+  <div class="hso-teaser__cards">
+    {teaser.map((c) => (
+      <CollectionCard name={c.name} image={c.image} href={getLocalizedPath(`/kollektionen/${c.slug}`, lang)} cta={t("collections.cta")} />
+    ))}
+  </div>
+  <a href={kollektionenPath} class="hso-navlink hso-teaser__all">{t("collections.viewAll")}</a>
+</section>
+
+<style>
+  .hso-teaser__cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 54px;
+  }
+  .hso-teaser__all {
+    display: block;
+    text-align: center;
+    margin-top: 50px;
+  }
+</style>

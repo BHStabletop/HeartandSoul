@@ -1,31 +1,53 @@
 ---
+import PropertyBadge from "./hso/PropertyBadge.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/ui";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const values = [
-  { title: t("values.heart.title"), description: t("values.heart.desc") },
-  { title: t("values.care.title"), description: t("values.care.desc") },
-  { title: t("values.honesty.title"), description: t("values.honesty.desc") },
-];
+const PROPERTIES = [
+  { icon: "dishwasher", key: "dishwasher" },
+  { icon: "microwave", key: "microwave" },
+  { icon: "oven", key: "oven" },
+  { icon: "stackable", key: "stackable" },
+  { icon: "unique", key: "unique" },
+  { icon: "colour-variance", key: "colourVariance" },
+  { icon: "in-stock", key: "inStock" },
+  { icon: "fair-produced", key: "fairProduced" },
+] as const;
 ---
 
-<section id="values" class="border-t border-white/10 bg-ink-800 px-6 py-24">
-  <div class="mx-auto max-w-6xl">
-    <p class="text-center text-sm font-semibold uppercase tracking-[0.2em] text-brand-400">
-      {t("values.eyebrow")}
-    </p>
-    <h2 class="mt-4 text-center text-3xl font-bold text-white sm:text-4xl">
-      {t("values.title")}
-    </h2>
-    <div class="mt-14 grid gap-8 sm:grid-cols-3">
-      {values.map((value) => (
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-8">
-          <h3 class="text-xl font-semibold text-white">{value.title}</h3>
-          <p class="mt-3 text-white/70">{value.description}</p>
-        </div>
-      ))}
-    </div>
+<section id="values" class="hso-section hso-values">
+  <h2>{t("values.heading")}</h2>
+  <div class="hso-values__grid">
+    {PROPERTIES.map((p) => (
+      <PropertyBadge icon={p.icon} label={t(`values.${p.key}` as any)} />
+    ))}
   </div>
 </section>
+
+<style>
+  .hso-values {
+    text-align: center;
+  }
+  .hso-values h2 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0 0 clamp(40px, 6vw, 80px);
+  }
+  .hso-values__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 48px 24px;
+    justify-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .hso-values__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

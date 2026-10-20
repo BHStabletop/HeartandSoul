@@ -1,0 +1,85 @@
+---
+import Blob from "./Blob.astro";
+import Button from "./Button.astro";
+
+interface Props {
+  name: string;
+  image: string;
+  href: string;
+  cta: string;
+  external?: boolean;
+}
+
+const { name, image, href, cta, external = false } = Astro.props;
+---
+
+<div class="hso-card">
+  <div class="hso-card__plate">
+    <div class="hso-card__bubble">
+      <Blob shape="bubble" width={220} color="var(--hso-white)">
+        <span>{name}</span>
+      </Blob>
+    </div>
+    <img src={image} alt={name} loading="lazy" />
+  </div>
+  <Button href={href} minWidth={200} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}>
+    {cta}
+  </Button>
+</div>
+
+<style>
+  .hso-card {
+    width: 100%;
+    max-width: 296px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+  .hso-card__plate {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    /* Reserve the bubble's upward overflow (top: -30%) inside the card so it
+       never intrudes into the row gap. margin-top % is relative to the card
+       width, which equals the plate height, so this always matches the overflow
+       exactly — the grid row-gap becomes the real spacing at every width. */
+    margin-top: 30%;
+  }
+  .hso-card__bubble {
+    position: absolute;
+    left: -4%;
+    top: -30%;
+    width: 74%;
+    z-index: 1;
+  }
+  .hso-card__bubble :global(.hso-blob) {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 220 / 207;
+  }
+  /* The plate covers the lower ~48% of the bubble, so the name is centered
+     within the top portion that stays visible as white above the plate. */
+  .hso-card__bubble :global(.hso-blob__content) {
+    align-items: center;
+    padding-bottom: 48%;
+  }
+  .hso-card__bubble span {
+    font-family: var(--font-display);
+    font-weight: var(--fw-display-bold);
+    font-size: var(--type-collection-size);
+    line-height: var(--type-collection-lh);
+    color: var(--text-on-light);
+    text-wrap: balance;
+    padding: 0 10%;
+  }
+  .hso-card__plate img {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 88%;
+    height: 88%;
+    object-fit: contain;
+    z-index: 2;
+  }
+</style>

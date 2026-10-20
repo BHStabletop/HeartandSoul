@@ -1,0 +1,13 @@
+<?xml version="1.0"?><svg id="Ebene_2" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 82.59 82.59">
+  <g id="Ebene_1-2">
+    <g>
+      <circle cx="41.3" cy="41.3" r="40.3" fill="#a3c994"></circle>
+      <rect x="19.78" y="18.47" width="43.02" height="47.13" rx="5.67" ry="5.67" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></rect>
+      <rect x="24.28" y="35.14" width="34.44" height="23.8" rx="5.67" ry="5.67" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></rect>
+      <circle cx="28.44" cy="25.3" r="1.02" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></circle>
+      <circle cx="54.8" cy="25.3" r="1.02" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></circle>
+      <line x1="25.64" y1="30.41" x2="57.6" y2="30.41" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></line>
+      <line x1="36.21" y1="25.3" x2="46.38" y2="25.3" fill="none" stroke="#4d7d59" stroke-miterlimit="10" stroke-width="2"></line>
+    </g>
+  </g>
+</svg>

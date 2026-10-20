@@ -6,39 +6,76 @@ const t = useTranslations(lang);
 const privacyPath = getLocalizedPath("/datenschutz", lang);
 ---
 
-<div
-  id="cookie-banner"
-  class="fixed inset-x-0 bottom-0 z-[100] hidden border-t border-white/10 bg-ink-900/95 px-6 py-6 backdrop-blur"
-  role="dialog"
-  aria-live="polite"
-  aria-label={t("cookie.title")}
->
-  <div class="mx-auto flex max-w-6xl flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-    <div class="max-w-2xl text-sm text-white/70">
-      <p class="font-semibold text-white">{t("cookie.title")}</p>
-      <p class="mt-1">
+<div id="cookie-banner" class="hso-cookie" role="dialog" aria-live="polite" aria-label={t("cookie.title")}>
+  <div class="hso-cookie__inner">
+    <div class="hso-cookie__text">
+      <p class="hso-cookie__title">{t("cookie.title")}</p>
+      <p>
         {t("cookie.text")}{" "}
-        <a href={privacyPath} class="underline underline-offset-2 hover:text-white">{t("cookie.privacyLink")}</a>.
+        <a href={privacyPath}>{t("cookie.privacyLink")}</a>.
       </p>
     </div>
-    <div class="flex shrink-0 gap-3">
-      <button
-        type="button"
-        id="cookie-reject"
-        class="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
-      >
-        {t("cookie.rejectAll")}
-      </button>
-      <button
-        type="button"
-        id="cookie-accept"
-        class="rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-500"
-      >
-        {t("cookie.acceptAll")}
-      </button>
+    <div class="hso-cookie__actions">
+      <button type="button" id="cookie-reject" class="hso-btn hso-btn--secondary">{t("cookie.rejectAll")}</button>
+      <button type="button" id="cookie-accept" class="hso-btn hso-btn--primary">{t("cookie.acceptAll")}</button>
     </div>
   </div>
 </div>
+
+<style>
+  .hso-cookie {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+    background: var(--hso-green-deep);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 24px clamp(20px, 5vw, 60px);
+  }
+  .hso-cookie.hso-cookie--visible {
+    display: block;
+  }
+  .hso-cookie__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .hso-cookie__text {
+    max-width: 640px;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .hso-cookie__title {
+    font-family: var(--font-core);
+    font-weight: var(--fw-core-semi);
+    color: var(--hso-white);
+    margin: 0;
+  }
+  .hso-cookie__text p:not(.hso-cookie__title) {
+    margin-top: 6px;
+  }
+  .hso-cookie__text a {
+    color: var(--hso-white);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .hso-cookie__actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 800px) {
+    .hso-cookie__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+</style>
 
 <script>
   const STORAGE_KEY = "cookie-consent";
@@ -58,8 +95,8 @@ const privacyPath = getLocalizedPath("/datenschutz", lang);
     const acceptBtn = document.getElementById("cookie-accept");
     const rejectBtn = document.getElementById("cookie-reject");
 
-    const show = () => banner.classList.remove("hidden");
-    const hide = () => banner.classList.add("hidden");
+    const show = () => banner.classList.add("hso-cookie--visible");
+    const hide = () => banner.classList.remove("hso-cookie--visible");
 
     let stored: string | null = null;
     try {

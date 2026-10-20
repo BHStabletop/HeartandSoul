@@ -5,34 +5,68 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section class="relative overflow-hidden px-6 pt-20 pb-24 sm:pt-28 sm:pb-32">
-  <div
-    class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_-10%,theme(colors.brand.700/0.35),transparent_60%)]"
-  >
+<section class="hso-hero">
+  <div class="hso-hero__image">
+    <img src="/home-hero.webp" alt={t("hero.imageAlt")} fetchpriority="high" />
   </div>
-  <div class="mx-auto max-w-3xl text-center">
-    <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-brand-400">
-      {t("hero.eyebrow")}
-    </p>
-    <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-      {t("hero.title")}
-    </h1>
-    <p class="mx-auto mt-6 max-w-xl text-lg text-white/70">
-      {t("hero.subtitle")}
-    </p>
-    <div class="mt-10 flex justify-center gap-4">
-      <a
-        href="#about"
-        class="rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-500"
-      >
-        {t("hero.ctaPrimary")}
-      </a>
-      <a
-        href="#contact"
-        class="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-      >
-        {t("hero.ctaSecondary")}
-      </a>
-    </div>
-  </div>
+  <!-- Headline is baked into the background artwork; keep an accessible heading. -->
+  <h1 class="hso-hero__sr">Love at first sight</h1>
+  <a href="#about" class="hso-hero__scroll" aria-label={t("hero.scrollCue")}>
+    <svg width="18" height="34" viewBox="0 0 18 34" fill="none" aria-hidden="true">
+      <path d="M9 0v33M1 25l8 8 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </a>
 </section>
+
+<style>
+  .hso-hero {
+    position: relative;
+    /* Pull up under the (transparent) sticky header so the image is full-bleed
+       to the very top and the logo/menu overlay it, as in the mockup. */
+    margin-top: -110px;
+    height: min(84vw, 820px);
+    min-height: 340px;
+    overflow: hidden;
+    border-radius: 0 0 62% 42% / 0 0 8% 6%;
+  }
+  @media (min-width: 900px) {
+    .hso-hero {
+      margin-top: -135px;
+    }
+  }
+  .hso-hero__image {
+    position: absolute;
+    inset: 0;
+  }
+  .hso-hero__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+    display: block;
+  }
+  /* Visually hidden but available to screen readers / SEO. */
+  .hso-hero__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .hso-hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(16px, 4vw, 40px);
+    transform: translateX(-50%);
+    color: var(--hso-white);
+    opacity: 0.85;
+    transition: opacity var(--dur-fast) var(--ease-soft);
+  }
+  .hso-hero__scroll:hover {
+    opacity: 1;
+  }
+</style>

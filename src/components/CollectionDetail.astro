@@ -1,0 +1,328 @@
+---
+import Blob from "./hso/Blob.astro";
+import Button from "./hso/Button.astro";
+import { collections } from "../data/collections";
+import { getLangFromUrl, useTranslations } from "../i18n/ui";
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const collection = collections.find((c) => c.slug === slug);
+if (!collection) throw new Error(`Unknown collection slug: ${slug}`);
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const name = collection.name
+  .toLowerCase()
+  .replace(/(^|[\s-])([a-z])/g, (_, sep, ch) => sep + ch.toUpperCase());
+const description = lang === "de" ? collection.descriptionDe : collection.descriptionEn;
+const shopUrl = lang === "de" ? collection.urlDe : collection.urlEn;
+
+const detail = collection.detail;
+const heading = detail ? (lang === "de" ? detail.headingDe : detail.headingEn) : name;
+const body = detail ? (lang === "de" ? detail.bodyDe : detail.bodyEn) : description;
+const actionBody = detail ? (lang === "de" ? detail.actionBodyDe : detail.actionBodyEn) : "";
+const references = detail?.references ?? [];
+---
+
+{detail ? (
+  <section class="hso-cd-hero">
+    <div class="hso-cd-hero__image">
+      <img src={detail.hero} alt={`${name} — HEART&SOUL`} fetchpriority="high" />
+    </div>
+    <a href="#intro" class="hso-cd-hero__scroll" aria-label={t("hero.scrollCue")}>
+      <svg width="18" height="34" viewBox="0 0 18 34" fill="none" aria-hidden="true">
+        <path d="M9 0v33M1 25l8 8 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </a>
+  </section>
+) : (
+  <section class="hso-cd-herofallback">
+    <div class="hso-cd-herofallback__blob">
+      <Blob shape="bubble" width={260} color="var(--hso-white)">
+        <span>{name}</span>
+      </Blob>
+    </div>
+    <img src={collection.image} alt={name} />
+  </section>
+)}
+
+<section id="intro" class="hso-section hso-cd-intro">
+  <h1>{heading}</h1>
+  <p>{body}</p>
+</section>
+
+{detail && (
+  <section class="hso-section hso-cd-product">
+    <div class="hso-cd-product__media">
+      <img src={detail.product} alt={`${name} ${t("collectionDetail.setHeading")}`} loading="lazy" />
+    </div>
+    <Button href={shopUrl} minWidth={230} target="_blank" rel="noopener noreferrer">
+      {t("collectionDetail.productCta")}
+    </Button>
+  </section>
+)}
+
+{detail && (
+  <section class="hso-section hso-cd-action">
+    <div class="hso-cd-action__media">
+      <img src={detail.action} alt="" loading="lazy" />
+    </div>
+    <div class="hso-cd-action__text">
+      <h2>{t("collectionDetail.inActionHeading")}</h2>
+      <p>{actionBody}</p>
+      <Button href={shopUrl} minWidth={210} target="_blank" rel="noopener noreferrer">
+        {t("collectionDetail.referencesCta")}
+      </Button>
+    </div>
+  </section>
+)}
+
+{references.length > 0 && (
+  <section class="hso-section hso-cd-carousel" aria-roledescription="carousel">
+    <button type="button" class="hso-cd-carousel__nav hso-cd-carousel__nav--prev" aria-label="◀" data-dir="-1" hidden={references.length < 2}>
+      <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true"><path d="M14 2 3 14l11 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="hso-cd-carousel__track">
+      {references.map((src, i) => (
+        <div class="hso-cd-carousel__slide">
+          <img src={src} alt="" loading="lazy" aria-label={`${i + 1} / ${references.length}`} />
+        </div>
+      ))}
+    </div>
+    <button type="button" class="hso-cd-carousel__nav hso-cd-carousel__nav--next" aria-label="▶" data-dir="1" hidden={references.length < 2}>
+      <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true"><path d="M2 2l11 12L2 26" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </section>
+)}
+
+<script>
+  const carousel = document.querySelector<HTMLElement>(".hso-cd-carousel");
+  if (carousel) {
+    const track = carousel.querySelector<HTMLElement>(".hso-cd-carousel__track")!;
+    carousel.querySelectorAll<HTMLButtonElement>(".hso-cd-carousel__nav").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const dir = Number(btn.dataset.dir);
+        track.scrollBy({ left: dir * track.clientWidth, behavior: "smooth" });
+      });
+    });
+  }
+</script>
+
+<style>
+  /* ---------- Hero (full-bleed, header overlays it) ---------- */
+  .hso-cd-hero {
+    position: relative;
+    margin-top: -110px;
+    height: min(78vw, 720px);
+    min-height: 320px;
+    overflow: hidden;
+    border-radius: 0 0 62% 42% / 0 0 8% 6%;
+  }
+  @media (min-width: 900px) {
+    .hso-cd-hero {
+      margin-top: -135px;
+    }
+  }
+  .hso-cd-hero__image {
+    position: absolute;
+    inset: 0;
+  }
+  .hso-cd-hero__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    display: block;
+  }
+  .hso-cd-hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(16px, 4vw, 40px);
+    transform: translateX(-50%);
+    color: var(--hso-white);
+    opacity: 0.85;
+    transition: opacity var(--dur-fast) var(--ease-soft);
+  }
+  .hso-cd-hero__scroll:hover {
+    opacity: 1;
+  }
+
+  /* ---------- Fallback hero (collections without a detail asset) ---------- */
+  .hso-cd-herofallback {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(40px, 8vw, 90px) 20px 20px;
+  }
+  .hso-cd-herofallback__blob {
+    position: absolute;
+    top: clamp(20px, 5vw, 60px);
+    z-index: 1;
+    width: clamp(180px, 26vw, 260px);
+  }
+  .hso-cd-herofallback__blob :global(.hso-blob) {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 220 / 207;
+  }
+  .hso-cd-herofallback__blob span {
+    font-family: var(--font-display);
+    font-weight: var(--fw-display-bold);
+    font-size: var(--type-collection-size);
+    line-height: var(--type-collection-lh);
+    color: var(--text-on-light);
+  }
+  .hso-cd-herofallback img {
+    width: min(360px, 80%);
+    height: auto;
+    margin-top: 60px;
+  }
+
+  /* ---------- Intro ---------- */
+  .hso-cd-intro {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+  }
+  .hso-cd-intro h1 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+    max-width: 780px;
+  }
+  .hso-cd-intro p {
+    max-width: 620px;
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
+    margin: 0;
+  }
+
+  /* ---------- Product line-up ---------- */
+  .hso-cd-product {
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .hso-cd-product__media {
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+  .hso-cd-product__media img {
+    width: min(720px, 100%);
+    height: auto;
+  }
+
+  /* ---------- See it in action ---------- */
+  .hso-cd-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(28px, 5vw, 64px);
+  }
+  .hso-cd-action__media {
+    width: 100%;
+    max-width: 560px;
+  }
+  .hso-cd-action__media img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .hso-cd-action__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+    max-width: 520px;
+  }
+  .hso-cd-action__text h2 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+  }
+  .hso-cd-action__text p {
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
+    margin: 0;
+  }
+  @media (min-width: 900px) {
+    .hso-cd-action {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    .hso-cd-action__text {
+      text-align: left;
+      align-items: flex-start;
+    }
+  }
+
+  /* ---------- Reference carousel ---------- */
+  .hso-cd-carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: clamp(16px, 5vw, 80px);
+    padding-right: clamp(16px, 5vw, 80px);
+  }
+  .hso-cd-carousel__track {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border-radius: 24px;
+  }
+  .hso-cd-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+  .hso-cd-carousel__slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    display: grid;
+    place-items: center;
+  }
+  .hso-cd-carousel__slide img {
+    width: min(760px, 100%);
+    height: auto;
+    display: block;
+  }
+  .hso-cd-carousel__nav {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--hso-white);
+    cursor: pointer;
+    opacity: 0.85;
+    transition: opacity var(--dur-fast) var(--ease-soft);
+  }
+  .hso-cd-carousel__nav:hover {
+    opacity: 1;
+  }
+  .hso-cd-carousel__nav[hidden] {
+    display: none;
+  }
+</style>

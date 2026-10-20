@@ -1,0 +1,21 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary";
+  minWidth?: number;
+  class?: string;
+  target?: string;
+  rel?: string;
+}
+
+const { href, variant = "primary", minWidth, class: className, ...rest } = Astro.props;
+const Tag = href ? "a" : "button";
+const style = minWidth ? { minWidth: `${minWidth}px` } : undefined;
+---
+
+<Tag href={href} class:list={["hso-btn", variant === "secondary" ? "hso-btn--secondary" : "hso-btn--primary", className]} style={style} {...rest}>
+  <slot />
+  <svg width="22" height="10" viewBox="0 0 26 12" fill="none" aria-hidden="true">
+    <path d="M1 6h22M18.5 1.5 23.5 6l-5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
+</Tag>

@@ -5,36 +5,77 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="instagram" class="border-t border-white/10 bg-ink-800 px-6 py-24">
-  <div class="mx-auto max-w-6xl">
-    <p class="text-center text-sm font-semibold uppercase tracking-[0.2em] text-brand-400">
-      {t("instagram.eyebrow")}
-    </p>
-    <h2 class="mt-4 text-center text-3xl font-bold text-white sm:text-4xl">{t("instagram.title")}</h2>
-    <p class="mx-auto mt-4 max-w-xl text-center text-white/70">{t("instagram.subtitle")}</p>
+<section id="instagram" class="hso-section hso-insta">
+  <h2>{t("instagram.title")}</h2>
+  <p>{t("instagram.subtitle")}</p>
 
-    <div
-      id="instagram-feed"
-      data-loading={t("instagram.loading")}
-      data-empty={t("instagram.empty")}
-      data-error={t("instagram.error")}
-      class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-    >
-      <p class="col-span-full text-center text-sm text-white/50">{t("instagram.loading")}</p>
-    </div>
-
-    <div class="mt-10 text-center">
-      <a
-        href="https://www.instagram.com/bhs.tabletop/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-sm font-semibold text-brand-400 transition hover:text-brand-300"
-      >
-        {t("instagram.cta")} &rarr;
-      </a>
-    </div>
+  <div
+    id="instagram-feed"
+    data-loading={t("instagram.loading")}
+    data-empty={t("instagram.empty")}
+    data-error={t("instagram.error")}
+    class="hso-insta__grid"
+  >
+    <p class="hso-insta__status">{t("instagram.loading")}</p>
   </div>
+
+  <a href="https://www.instagram.com/bhs.tabletop/" target="_blank" rel="noopener noreferrer" class="hso-navlink hso-insta__cta">
+    {t("instagram.cta")} &rarr;
+  </a>
 </section>
+
+<style>
+  .hso-insta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+  }
+  .hso-insta h2 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+  }
+  .hso-insta > p {
+    max-width: 560px;
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
+    margin: 0;
+  }
+  .hso-insta__grid {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .hso-insta__grid img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--dur-base) var(--ease-soft);
+  }
+  .hso-insta__grid a:hover img {
+    transform: scale(1.03);
+  }
+  .hso-insta__status {
+    grid-column: 1 / -1;
+    font-size: var(--type-body-size);
+    color: var(--hso-white);
+    opacity: 0.75;
+  }
+
+  @media (min-width: 640px) {
+    .hso-insta__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
 
 <script>
   interface InstagramPost {
@@ -51,7 +92,7 @@ const t = useTranslations(lang);
     const showMessage = (text: string) => {
       container.replaceChildren();
       const p = document.createElement("p");
-      p.className = "col-span-full text-center text-sm text-white/50";
+      p.className = "hso-insta__status";
       p.textContent = text;
       container.appendChild(p);
     };
@@ -74,14 +115,11 @@ const t = useTranslations(lang);
         link.href = post.permalink;
         link.target = "_blank";
         link.rel = "noopener noreferrer";
-        link.className =
-          "group block aspect-square overflow-hidden rounded-2xl border border-white/10 bg-white/5";
 
         const img = document.createElement("img");
         img.src = post.mediaUrl;
         img.alt = post.caption ? post.caption.slice(0, 140) : "";
         img.loading = "lazy";
-        img.className = "h-full w-full object-cover transition duration-300 group-hover:scale-105";
 
         link.appendChild(img);
         container.appendChild(link);

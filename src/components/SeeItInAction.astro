@@ -1,0 +1,66 @@
+---
+import Button from "./hso/Button.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="hso-section hso-action">
+  <div class="hso-action__image">
+    <img src="/see-it-in-action.png" alt={t("action.imageAlt")} class="hso-action__photo" />
+  </div>
+  <div class="hso-action__text">
+    <h2 set:html={t("action.heading")} />
+    <p>{t("action.body")}</p>
+    <Button href="#instagram" minWidth={230}>{t("action.cta")}</Button>
+  </div>
+</section>
+
+<style>
+  .hso-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+  .hso-action__image {
+    display: flex;
+    justify-content: center;
+  }
+  .hso-action__photo {
+    width: min(620px, 100%);
+    height: auto;
+    transform: rotate(-6deg);
+  }
+  .hso-action__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    max-width: 539px;
+    text-align: left;
+  }
+  .hso-action__text h2 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+  }
+  .hso-action__text p {
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
+    margin: 0;
+  }
+
+  @media (min-width: 900px) {
+    .hso-action {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 90px;
+    }
+  }
+</style>

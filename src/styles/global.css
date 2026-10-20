@@ -1,22 +1,149 @@
 @import "tailwindcss";
 
+/* HEART&SOUL brand tokens — transcribed from the HSO Screendesign design system.
+   Macklin Text / Museo Sans are licensed retail faces with no shipped binaries;
+   Bitter / Nunito Sans are the documented free stand-ins until real files land. */
+:root {
+  --hso-green-deep: #4d7d59;
+  --hso-green-light: #a2c994;
+  --hso-green-icon: #a3c994;
+  --hso-white: #ffffff;
+  --hso-black: #000000;
+  --hso-grey-placeholder: #d9d9d9;
+
+  --surface-ground: var(--hso-green-deep);
+  --surface-blob: var(--hso-green-light);
+  --scrim-header: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0) 100%);
+
+  --text-on-ground: var(--hso-white);
+  --text-on-light: var(--hso-green-deep);
+
+  --button-primary-bg: var(--hso-green-light);
+  --button-primary-fg: var(--hso-green-deep);
+  --button-secondary-bg: var(--hso-green-deep);
+  --button-secondary-fg: var(--hso-white);
+
+  --link-color: var(--hso-white);
+  --link-color-hover: var(--hso-green-light);
+
+  --font-display: "Macklin Text", Bitter, Georgia, "Times New Roman", serif;
+  --font-core: "Museo Sans", "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+
+  --fw-display-bold: 700;
+  --fw-core-light: 300;
+  --fw-core-semi: 600;
+
+  --type-display-size: clamp(2.25rem, 1.6rem + 2.6vw, 4.375rem);
+  --type-display-lh: 1.05;
+  --type-collection-size: clamp(1.6rem, 1.3rem + 1.2vw, 3.125rem);
+  --type-collection-lh: 1.1;
+  --type-body-size: 1.125rem;
+  --type-body-lh: 1.6rem;
+  --type-nav-size: 1.1rem;
+  --type-button-size: 1.125rem;
+  --type-badge-size: 1.125rem;
+
+  --button-height: 53px;
+  --button-radius: 100px;
+
+  --radius-pill: 100px;
+
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-slow: 520ms;
+}
+
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --color-brand-50: #fdf2f4;
-  --color-brand-100: #fbe4e8;
-  --color-brand-200: #f6c9d1;
-  --color-brand-300: #eea1af;
-  --color-brand-400: #e26e85;
-  --color-brand-500: #d13f5c;
-  --color-brand-600: #b4254a;
-  --color-brand-700: #931b3d;
-  --color-brand-800: #7a1a37;
-  --color-brand-900: #691a33;
-  --color-ink-900: #14100f;
-  --color-ink-800: #211a18;
+  --font-sans: var(--font-core);
+  --font-display: var(--font-display);
+  --color-hso-deep: #4d7d59;
+  --color-hso-light: #a2c994;
+  --color-hso-icon: #a3c994;
+  --color-hso-grey: #d9d9d9;
+}
+
+html {
+  background-color: var(--surface-ground);
 }
 
 body {
-  background-color: var(--color-ink-900);
-  color: #f5eeee;
+  background-color: var(--surface-ground);
+  color: var(--text-on-ground);
+  font-family: var(--font-core);
+  font-weight: var(--fw-core-light);
+}
+
+.hso-section {
+  padding: clamp(56px, 9vw, 120px) clamp(20px, 6vw, 120px);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-bold);
+  text-wrap: pretty;
+}
+
+a {
+  transition:
+    color var(--dur-fast) var(--ease-soft),
+    opacity var(--dur-fast) var(--ease-soft);
+}
+
+/* Pill CTA — the only button shape in the HEART&SOUL system. */
+.hso-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  height: var(--button-height);
+  padding: 0 26px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-core);
+  font-weight: var(--fw-core-semi);
+  font-size: var(--type-button-size);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    filter var(--dur-fast) var(--ease-soft),
+    transform var(--dur-fast) var(--ease-soft);
+}
+.hso-btn:hover {
+  filter: brightness(0.94);
+}
+.hso-btn:active {
+  transform: scale(0.985);
+}
+.hso-btn--primary {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-fg);
+}
+.hso-btn--secondary {
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-fg);
+}
+.hso-btn svg {
+  display: block;
+  flex: none;
+}
+
+.hso-navlink {
+  font-family: var(--font-core);
+  font-weight: var(--fw-core-semi);
+  font-size: var(--type-nav-size);
+  color: var(--hso-white);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-soft);
+}
+.hso-navlink:hover,
+.hso-navlink--active {
+  color: var(--hso-green-light);
 }

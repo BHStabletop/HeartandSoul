@@ -1,45 +1,113 @@
 ---
+import Blob from "./hso/Blob.astro";
+import CollectionCard from "./hso/CollectionCard.astro";
 import { collections } from "../data/collections";
-import { getLangFromUrl, useTranslations } from "../i18n/ui";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const titleCase = (s: string) =>
+  s
+    .toLowerCase()
+    .split(/([\s-])/)
+    .map((part) => (/[\s-]/.test(part) ? part : part.charAt(0).toUpperCase() + part.slice(1)))
+    .join("");
 ---
 
-<section class="border-t border-white/10 px-6 py-20">
-  <div class="mx-auto max-w-6xl">
-    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-400">{t("collections.eyebrow")}</p>
-    <h1 class="mt-4 text-3xl font-bold text-white sm:text-4xl">{t("collections.title")}</h1>
-    <p class="mt-4 max-w-2xl text-white/70">{t("collections.subtitle")}</p>
-
-    <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {collections.map((collection) => (
-        <a
-          href={lang === "de" ? collection.urlDe : collection.urlEn}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:border-white/30"
-        >
-          <div class="aspect-[500/281] overflow-hidden">
-            <img
-              src={collection.image}
-              alt={collection.name}
-              class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-              loading="lazy"
-            />
-          </div>
-          <div class="p-6">
-            <h2 class="text-lg font-semibold text-white">{collection.name}</h2>
-            <p class="mt-2 text-sm text-white/70">
-              {lang === "de" ? collection.descriptionDe : collection.descriptionEn}
-            </p>
-            <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-400 group-hover:text-brand-300">
-              {t("collections.cta")}
-              <span aria-hidden="true">&rarr;</span>
-            </span>
-          </div>
-        </a>
-      ))}
-    </div>
+<section class="hso-kollhero">
+  <div class="hso-kollhero__image">
+    <img src="/collections-hero.jpg" alt="" />
+  </div>
+  <div class="hso-kollhero__blob">
+    <Blob shape="wide" width={420} rotate={0}>
+      <h1>{t("collections.title")}</h1>
+    </Blob>
   </div>
 </section>
+
+<section class="hso-section hso-kollintro">
+  <h2>{t("collections.heading")}</h2>
+  <p>{t("collections.subtitle")}</p>
+</section>
+
+<section class="hso-section hso-kollgrid">
+  {collections.map((collection) => (
+    <CollectionCard
+      name={titleCase(collection.name)}
+      image={collection.image}
+      href={getLocalizedPath(`/kollektionen/${collection.slug}`, lang)}
+      cta={t("collections.cta")}
+    />
+  ))}
+</section>
+
+<style>
+  .hso-kollhero {
+    position: relative;
+    height: min(50vw, 460px);
+    min-height: 240px;
+    overflow: hidden;
+    border-radius: 0 0 62% 42% / 0 0 8% 6%;
+  }
+  .hso-kollhero__image {
+    position: absolute;
+    inset: 0;
+  }
+  .hso-kollhero__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hso-kollhero__blob {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%, -50%);
+    width: clamp(220px, 30vw, 420px);
+  }
+  .hso-kollhero__blob :global(.hso-blob) {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 479.686 / 321.459;
+  }
+  .hso-kollhero__blob h1 {
+    font-size: clamp(1.6rem, 1.1rem + 2vw, 2.8rem);
+    line-height: 1.1;
+    color: var(--hso-white);
+    margin: 0;
+    text-align: center;
+  }
+  .hso-kollintro {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+  }
+  .hso-kollintro h2 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+    max-width: 780px;
+  }
+  .hso-kollintro p {
+    max-width: 620px;
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
+    margin: 0;
+  }
+  .hso-kollgrid {
+    padding-top: clamp(24px, 3vw, 48px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 296px));
+    justify-content: center;
+    /* Bubble overflow is reserved inside each card, so this row-gap is the true,
+       consistent spacing between a button and the bubble of the card below. */
+    gap: clamp(40px, 5vw, 64px) 54px;
+  }
+</style>

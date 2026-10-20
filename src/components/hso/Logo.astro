@@ -1,0 +1,29 @@
+---
+// Official HEART&SOUL wordmark (white lettering on the brand's green blob).
+// The artwork is a self-contained badge with a transparent background, so it
+// sits cleanly over the hero photo (header) and the light-green footer alike.
+interface Props {
+  width?: number;
+  /** Kept for API compatibility; the artwork has its colours baked in. */
+  color?: string;
+  class?: string;
+}
+
+const { width = 154, class: className } = Astro.props;
+---
+
+<img
+  src="/heartandsoul-logo.png"
+  alt="HEART&SOUL"
+  width={width}
+  height={Math.round((width * 469) / 521)}
+  class:list={["hso-logo", className]}
+/>
+
+<style>
+  .hso-logo {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+</style>

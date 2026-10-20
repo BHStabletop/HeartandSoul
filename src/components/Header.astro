@@ -1,4 +1,5 @@
 ---
+import Logo from "./hso/Logo.astro";
 import LanguageSwitch from "./LanguageSwitch.astro";
 import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
 
@@ -7,33 +8,143 @@ const t = useTranslations(lang);
 const homePath = getLocalizedPath("/", lang);
 
 const links = [
-  { href: homePath, label: t("nav.home") },
   { href: getLocalizedPath("/kollektionen", lang), label: t("nav.collections") },
   { href: `${homePath}#about`, label: t("nav.about") },
   { href: `${homePath}#contact`, label: t("nav.contact") },
 ];
 ---
 
-<header class="sticky top-0 z-50 border-b border-white/10 bg-ink-900/80 backdrop-blur">
-  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-    <a href={homePath} class="text-white" aria-label="HEART&SOUL">
-      <img src="/heartandsoul-logo.svg" alt="HEART&SOUL" class="h-9 w-auto" />
-    </a>
-    <ul class="hidden gap-8 text-sm font-medium text-white/70 sm:flex">
-      {links.map((link) => (
-        <li>
-          <a href={link.href} class="transition hover:text-white">{link.label}</a>
-        </li>
-      ))}
-    </ul>
-    <div class="flex items-center gap-3">
-      <LanguageSwitch />
-      <a
-        href={`${homePath}#contact`}
-        class="rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-500"
-      >
-        {t("nav.cta")}
-      </a>
-    </div>
+<header class="hso-header">
+  <a href={homePath} class="hso-header__mark" aria-label="HEART&SOUL">
+    <Logo width={200} class="hso-header__logo" />
+  </a>
+
+  <nav class="hso-header__nav">
+    {links.map((link) => (
+      <a href={link.href} class="hso-navlink">{link.label}</a>
+    ))}
+    <LanguageSwitch />
   </nav>
+
+  <button type="button" class="hso-header__burger" aria-label={t("nav.menu")} aria-expanded="false" id="hso-burger">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
+<nav class="hso-header__mobile" id="hso-mobile-nav">
+  {links.map((link) => (
+    <a href={link.href} class="hso-navlink">{link.label}</a>
+  ))}
+  <LanguageSwitch />
+</nav>
+
+<script>
+  const burger = document.getElementById("hso-burger");
+  const menu = document.getElementById("hso-mobile-nav");
+  burger?.addEventListener("click", () => {
+    const open = menu?.classList.toggle("hso-header__mobile--open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  menu?.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => {
+      menu.classList.remove("hso-header__mobile--open");
+      burger?.setAttribute("aria-expanded", "false");
+    })
+  );
+</script>
+
+<style>
+  .hso-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(20px, 5vw, 80px);
+    /* Soft black shadow over the image for legibility (no green bar). */
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.34) 0%,
+      rgba(0, 0, 0, 0.14) 45%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+  }
+  .hso-header > * {
+    pointer-events: auto;
+  }
+  /* Logo bottom-anchored so it bleeds off the top edge (cut off) AND its
+     visible centre lines up with the vertically-centred menu. */
+  .hso-header__mark {
+    position: relative;
+    display: inline-flex;
+    align-self: flex-end;
+  }
+  :global(.hso-header__logo) {
+    width: 150px;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.22));
+  }
+  /* Menu: light shadow for extra legibility on top of the scrim. */
+  .hso-header__nav :global(.hso-navlink) {
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+  .hso-header__burger span {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+  .hso-header__nav {
+    display: none;
+    align-items: center;
+    gap: 34px;
+  }
+  .hso-header__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 34px;
+    height: 34px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+  .hso-header__burger span {
+    display: block;
+    height: 2px;
+    background: var(--hso-white);
+    border-radius: 2px;
+  }
+  .hso-header__mobile {
+    position: sticky;
+    top: 110px;
+    z-index: 49;
+    display: none;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px clamp(20px, 5vw, 80px) 28px;
+    background: var(--hso-green-deep);
+  }
+  .hso-header__mobile--open {
+    display: flex;
+  }
+
+  @media (min-width: 900px) {
+    .hso-header {
+      height: 135px;
+    }
+    :global(.hso-header__logo) {
+      width: clamp(175px, 13vw, 205px);
+    }
+    .hso-header__nav {
+      display: flex;
+    }
+    .hso-header__burger {
+      display: none;
+    }
+    .hso-header__mobile {
+      display: none !important;
+    }
+  }
+</style>

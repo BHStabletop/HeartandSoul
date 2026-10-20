@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
+import CollectionsTeaser from "../components/CollectionsTeaser.astro";
+import SeeItInAction from "../components/SeeItInAction.astro";
 import Values from "../components/Values.astro";
 import InstagramFeed from "../components/InstagramFeed.astro";
 import Contact from "../components/Contact.astro";
@@ -14,9 +16,11 @@ import Footer from "../components/Footer.astro";
   <main>
     <Hero />
     <About />
+    <CollectionsTeaser />
+    <SeeItInAction />
     <Values />
     <InstagramFeed />
     <Contact />
   </main>
-  <Footer />
+  <Footer mood />
 </Layout>
