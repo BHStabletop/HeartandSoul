@@ -14,14 +14,14 @@ const { name, image, href, cta, external = false } = Astro.props;
 ---
 
 <div class="hso-card">
-  <div class="hso-card__plate">
+  <a href={href} class="hso-card__plate" target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} aria-label={name}>
     <div class="hso-card__bubble">
       <Blob shape="bubble" width={220} color="var(--hso-white)">
         <span>{name}</span>
       </Blob>
     </div>
-    <img src={image} alt={name} loading="lazy" />
-  </div>
+    <img src={image} alt="" loading="lazy" />
+  </a>
   <Button href={href} minWidth={200} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}>
     {cta}
   </Button>
@@ -38,8 +38,11 @@ const { name, image, href, cta, external = false } = Astro.props;
   }
   .hso-card__plate {
     position: relative;
+    display: block;
     width: 100%;
     aspect-ratio: 1;
+    text-decoration: none;
+    cursor: pointer;
     /* Reserve the bubble's upward overflow (top: -30%) inside the card so it
        never intrudes into the row gap. margin-top % is relative to the card
        width, which equals the plate height, so this always matches the overflow

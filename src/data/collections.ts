@@ -48,7 +48,7 @@ export const collections: Collection[] = [
       bodyEn:
         "FLOW brings calm to the table with soft, organic shapes. The handmade look in classic white suits every occasion and lets your dishes shine naturally.",
       header: "/collections/flow-header.webp",
-      catalogPage: 8,
+      catalogPage: 7,
       articles: [
         { color: "White", image: "/collections/flow-article-white.webp" },
         { color: "Moon", image: "/collections/flow-article-moon.webp" },

@@ -56,6 +56,7 @@ export const ui = {
     "contact.title": "Lass uns sprechen",
     "contact.subtitle": "Du hast ein Projekt im Kopf oder einfach eine Frage? Schreib uns.",
     "contact.email": "hallo@heartandsoul.example",
+    "contact.cta": "Kontakt aufnehmen",
 
     "footer.instagramHandle": "heartandsoul.tableware",
     "footer.instagramCta": "Follow us on Instagram",
@@ -139,6 +140,7 @@ export const ui = {
     "contact.title": "Let's talk",
     "contact.subtitle": "Got a project in mind, or just a question? Write to us.",
     "contact.email": "hallo@heartandsoul.example",
+    "contact.cta": "Get in touch",
 
     "footer.instagramHandle": "heartandsoul.tableware",
     "footer.instagramCta": "Follow us on Instagram",
