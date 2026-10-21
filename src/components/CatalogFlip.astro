@@ -33,10 +33,24 @@ const images = Array.from(
     </button>
   </div>
 
-  <p class="hso-catalog__counter">Seite <span data-cur>–</span> / {PAGES}</p>
+  <div class="hso-catalog__bar">
+    <p class="hso-catalog__counter">Seite <span data-cur>–</span> / {PAGES}</p>
+    <button type="button" class="hso-catalog__zoom" aria-label="Seite vergrößern">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+        <path d="M21 21l-4.3-4.3M11 8v6M8 11h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Vergrößern</span>
+    </button>
+  </div>
 
   <script type="application/json" class="hso-catalog__data" set:html={JSON.stringify(images)} is:inline></script>
 </section>
+
+<div class="hso-catalog-lightbox" id="hso-catalog-lightbox" hidden>
+  <button type="button" class="hso-catalog-lightbox__close" aria-label="Schließen">&times;</button>
+  <div class="hso-catalog-lightbox__stage"></div>
+</div>
 
 <script>
   const PF_SRC = "https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js";
@@ -99,6 +113,48 @@ const images = Array.from(
       section.querySelector(".hso-catalog__nav--prev")?.addEventListener("click", () => pf?.flipPrev());
       section.querySelector(".hso-catalog__nav--next")?.addEventListener("click", () => pf?.flipNext());
     }
+
+    // --- Zoom lightbox: show the current spread in high resolution ---
+    const lightbox = document.getElementById("hso-catalog-lightbox")!;
+    const stage = lightbox.querySelector<HTMLElement>(".hso-catalog-lightbox__stage")!;
+    const zoomSrc = (n: number) => `/catalog/zoom/page-${String(n).padStart(3, "0")}.webp`;
+
+    const openZoom = () => {
+      if (!pf) return;
+      const idx = pf.getCurrentPageIndex(); // 0-based
+      let pages: number[];
+      if (idx <= 0) pages = [1];
+      else {
+        const left = idx % 2 === 1 ? idx : idx - 1; // spreads are (1,2),(3,4)…
+        pages = [left + 1, left + 2].filter((p) => p >= 1 && p <= images.length);
+      }
+      stage.innerHTML = "";
+      for (const p of pages) {
+        const img = document.createElement("img");
+        img.src = zoomSrc(p);
+        img.alt = `Katalog Seite ${p}`;
+        img.className = "hso-catalog-lightbox__page";
+        img.addEventListener("click", () => img.classList.toggle("is-zoomed"));
+        stage.appendChild(img);
+      }
+      lightbox.hidden = false;
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeZoom = () => {
+      lightbox.hidden = true;
+      stage.innerHTML = "";
+      document.body.style.overflow = "";
+    };
+
+    section.querySelector(".hso-catalog__zoom")?.addEventListener("click", openZoom);
+    lightbox.querySelector(".hso-catalog-lightbox__close")?.addEventListener("click", closeZoom);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox || e.target === stage) closeZoom();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !lightbox.hidden) closeZoom();
+    });
 
     // Only build the flipbook (loads the page images) once it scrolls into view.
     const io = new IntersectionObserver(
@@ -198,10 +254,90 @@ const images = Array.from(
   .hso-catalog__nav:hover {
     opacity: 1;
   }
+  .hso-catalog__bar {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 4vw, 32px);
+  }
   .hso-catalog__counter {
     margin: 0;
     font-size: var(--type-body-size);
     color: var(--hso-white);
     opacity: 0.8;
+  }
+  .hso-catalog__zoom {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
+    background: none;
+    color: var(--hso-white);
+    font: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-soft);
+  }
+  .hso-catalog__zoom:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* ---------- Zoom lightbox ---------- */
+  .hso-catalog-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.92);
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: clamp(16px, 4vw, 48px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .hso-catalog-lightbox[hidden] {
+    display: none;
+  }
+  .hso-catalog-lightbox__stage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(10px, 2vw, 24px);
+    margin: auto;
+  }
+  .hso-catalog-lightbox__page {
+    width: min(760px, 92vw);
+    height: auto;
+    border-radius: 3px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    cursor: zoom-in;
+  }
+  /* Click a page to view it at full resolution (scroll to pan). */
+  .hso-catalog-lightbox__page.is-zoomed {
+    width: 1370px;
+    max-width: none;
+    cursor: zoom-out;
+  }
+  .hso-catalog-lightbox__close {
+    position: fixed;
+    top: clamp(10px, 2vw, 22px);
+    right: clamp(10px, 2vw, 22px);
+    z-index: 101;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--hso-white);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .hso-catalog-lightbox__close:hover {
+    background: rgba(0, 0, 0, 0.75);
   }
 </style>
