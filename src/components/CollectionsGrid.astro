@@ -17,12 +17,7 @@ const titleCase = (s: string) =>
 
 <section class="hso-kollhero">
   <div class="hso-kollhero__image">
-    <img src="/collections-hero.jpg" alt="" />
-  </div>
-  <div class="hso-kollhero__blob">
-    <Blob shape="wide" width={420} rotate={0}>
-      <h1>{t("collections.title")}</h1>
-    </Blob>
+    <img src={lang === "de" ? "/collections-hero-de.webp" : "/collections-hero-en.webp"} alt={t("collections.title")} />
   </div>
 </section>
 
