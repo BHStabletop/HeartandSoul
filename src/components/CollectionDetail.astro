@@ -1,6 +1,7 @@
 ---
 import Blob from "./hso/Blob.astro";
 import Button from "./hso/Button.astro";
+import CatalogFlip from "./CatalogFlip.astro";
 import { collections } from "../data/collections";
 import { getLangFromUrl, useTranslations } from "../i18n/ui";
 
@@ -116,6 +117,8 @@ const isMulti = articles.length > 1;
     </div>
   </section>
 )}
+
+{detail && <CatalogFlip startPage={detail.catalogPage} />}
 
 <script>
   // --- Mood carousel: scroll one viewport per click ---

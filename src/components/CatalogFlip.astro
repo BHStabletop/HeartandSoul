@@ -1,0 +1,207 @@
+---
+interface Props {
+  /** 1-based catalogue page to open to. */
+  startPage?: number;
+}
+const { startPage = 1 } = Astro.props;
+
+const PAGES = 148;
+const images = Array.from(
+  { length: PAGES },
+  (_, i) => `/catalog/page-${String(i + 1).padStart(3, "0")}.webp`,
+);
+---
+
+<section class="hso-section hso-catalog" data-start={startPage}>
+  <h2>Katalog</h2>
+
+  <div class="hso-catalog__stage">
+    <button type="button" class="hso-catalog__nav hso-catalog__nav--prev" aria-label="Zurückblättern">
+      <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true"><path d="M14 2 3 14l11 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="hso-catalog__viewport">
+      <div class="hso-catalog__book" id="hso-flipbook"></div>
+      <div class="hso-catalog__placeholder" aria-hidden="true">
+        <img src="/catalog/page-001.webp" alt="" loading="lazy" />
+        <span class="hso-catalog__cue">Zum Blättern tippen</span>
+      </div>
+    </div>
+
+    <button type="button" class="hso-catalog__nav hso-catalog__nav--next" aria-label="Weiterblättern">
+      <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true"><path d="M2 2l11 12L2 26" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <p class="hso-catalog__counter">Seite <span data-cur>–</span> / {PAGES}</p>
+
+  <script type="application/json" class="hso-catalog__data" set:html={JSON.stringify(images)} is:inline></script>
+</section>
+
+<script>
+  const PF_SRC = "https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js";
+
+  function loadScript(src: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (document.querySelector(`script[src="${src}"]`)) return resolve();
+      const s = document.createElement("script");
+      s.src = src;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error("load failed"));
+      document.head.appendChild(s);
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>(".hso-catalog").forEach((section) => {
+    const el = section.querySelector<HTMLElement>(".hso-catalog__book")!;
+    const images: string[] = JSON.parse(section.querySelector(".hso-catalog__data")!.textContent || "[]");
+    const startPage = Number(section.dataset.start || 1);
+    const curEl = section.querySelector<HTMLElement>("[data-cur]");
+    let pf: any = null;
+    let inited = false;
+
+    const setCounter = () => {
+      if (curEl && pf) curEl.textContent = String(pf.getCurrentPageIndex() + 1);
+    };
+
+    async function init() {
+      if (inited) return;
+      inited = true;
+      try {
+        await loadScript(PF_SRC);
+      } catch {
+        section.classList.add("is-error");
+        return;
+      }
+      const St = (window as any).St;
+      pf = new St.PageFlip(el, {
+        width: 450,
+        height: 636,
+        size: "stretch",
+        minWidth: 180,
+        maxWidth: 720,
+        minHeight: 254,
+        maxHeight: 1018,
+        showCover: true,
+        usePortrait: true,
+        mobileScrollSupport: true,
+        maxShadowOpacity: 0.4,
+        flippingTime: 700,
+      });
+      pf.on("init", () => {
+        section.classList.add("is-ready");
+        if (startPage > 1) pf.turnToPage(startPage - 1);
+        setCounter();
+      });
+      pf.on("flip", setCounter);
+      pf.loadFromImages(images);
+
+      section.querySelector(".hso-catalog__nav--prev")?.addEventListener("click", () => pf?.flipPrev());
+      section.querySelector(".hso-catalog__nav--next")?.addEventListener("click", () => pf?.flipNext());
+    }
+
+    // Only build the flipbook (loads the page images) once it scrolls into view.
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          io.disconnect();
+          init();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    io.observe(section);
+  });
+</script>
+
+<style>
+  .hso-catalog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(22px, 4vw, 38px);
+  }
+  .hso-catalog > h2 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+    text-align: center;
+  }
+  .hso-catalog__stage {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(6px, 2vw, 16px);
+  }
+  .hso-catalog__viewport {
+    position: relative;
+    flex: 1;
+    max-width: 1000px;
+    aspect-ratio: 1424 / 1006; /* two pages side by side */
+  }
+  @media (max-width: 720px) {
+    .hso-catalog__viewport {
+      aspect-ratio: 712 / 1006; /* single page on small screens */
+      max-width: 460px;
+    }
+  }
+  .hso-catalog__book {
+    width: 100%;
+    height: 100%;
+  }
+  .hso-catalog__book :global(img) {
+    width: 100%;
+    height: 100%;
+  }
+  /* Cover placeholder shown until the flipbook is initialised. */
+  .hso-catalog__placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+  .hso-catalog__placeholder img {
+    max-height: 100%;
+    width: auto;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  .hso-catalog__cue {
+    position: absolute;
+    bottom: 14px;
+    font-size: 0.85rem;
+    color: var(--hso-white);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+  .hso-catalog.is-ready .hso-catalog__placeholder {
+    display: none;
+  }
+  .hso-catalog__nav {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--hso-white);
+    cursor: pointer;
+    opacity: 0.85;
+    transition: opacity var(--dur-fast) var(--ease-soft);
+  }
+  .hso-catalog__nav:hover {
+    opacity: 1;
+  }
+  .hso-catalog__counter {
+    margin: 0;
+    font-size: var(--type-body-size);
+    color: var(--hso-white);
+    opacity: 0.8;
+  }
+</style>

@@ -17,6 +17,8 @@ export interface CollectionDetail {
   articles: ArticleVariant[];
   /** Mood photos shown in the bottom slider. */
   moods: string[];
+  /** 1-based catalogue page the flipbook opens to for this collection. */
+  catalogPage: number;
 }
 
 export interface Collection {
@@ -46,6 +48,7 @@ export const collections: Collection[] = [
       bodyEn:
         "FLOW brings calm to the table with soft, organic shapes. The handmade look in classic white suits every occasion and lets your dishes shine naturally.",
       header: "/collections/flow-header.webp",
+      catalogPage: 8,
       articles: [
         { color: "White", image: "/collections/flow-article-white.webp" },
         { color: "Moon", image: "/collections/flow-article-moon.webp" },
@@ -67,6 +70,7 @@ export const collections: Collection[] = [
       bodyEn:
         "BALANCE combines clean lines with balanced proportions. In three calm colourways – Frost, Matcha and Smoke – you create timeless, harmonious table settings.",
       header: "/collections/balance-header.webp",
+      catalogPage: 20,
       articles: [
         { color: "Frost", image: "/collections/balance-article-frost.webp" },
         { color: "Matcha", image: "/collections/balance-article-matcha.webp" },
@@ -93,6 +97,7 @@ export const collections: Collection[] = [
       bodyEn:
         "PINE is all about textured relief decor, inspired by natural surfaces. Five shades – Almond, Blush, Coal, Cream and Sky – invite you to mix and match.",
       header: "/collections/pine-header.webp",
+      catalogPage: 38,
       articles: [
         { color: "Almond", image: "/collections/pine-article-almond.webp" },
         { color: "Blush", image: "/collections/pine-article-blush.webp" },
@@ -123,6 +128,7 @@ export const collections: Collection[] = [
       bodyEn:
         "MIRAGE in a bold indigo is a real eye-catcher. The deep-blue surface with black accents looks modern and expressive, while floral ornaments and rustic rims add a handmade touch. Whether a fresh salad, small snacks or hearty mains – on MIRAGE every dish gains presence.",
       header: "/collections/mirage-header.webp",
+      catalogPage: 60,
       articles: [{ image: "/collections/mirage-article.webp" }],
       moods: ["/collections/mirage-mood-1.webp", "/collections/mirage-mood-2.webp"],
     },
@@ -141,6 +147,7 @@ export const collections: Collection[] = [
       bodyEn:
         "SOULMATE relies on bold colours and characterful design. The two colourways, Jade and Sienna, combine beautifully with one another.",
       header: "/collections/soulmate-header.webp",
+      catalogPage: 72,
       articles: [
         { color: "Jade", image: "/collections/soulmate-article-jade.webp" },
         { color: "Sienna", image: "/collections/soulmate-article-sienna.webp" },
@@ -162,6 +169,7 @@ export const collections: Collection[] = [
       bodyEn:
         "PERFECT MATCH brings warm earth tones to the table that combine effortlessly. Four colours – Avocado, Breeze, Cumin and Thyme – for your perfect mix & match.",
       header: "/collections/perfect-match-header.webp",
+      catalogPage: 92,
       articles: [
         { color: "Avocado", image: "/collections/perfect-match-article-avocado.webp" },
         { color: "Breeze", image: "/collections/perfect-match-article-breeze.webp" },
@@ -185,6 +193,7 @@ export const collections: Collection[] = [
       bodyEn:
         "ADD-ON complements the HEART&SOUL collections with versatile pieces that round out every set – flexibly combinable with all your favourites.",
       header: "/collections/add-on-header.webp",
+      catalogPage: 1,
       articles: [{ image: "/collections/add-on-article.webp" }],
       moods: [],
     },
