@@ -50,12 +50,17 @@ const t = useTranslations(lang);
     width: 100%;
     max-width: 1100px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .hso-insta__grid a {
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
   }
   .hso-insta__grid img {
     width: 100%;
-    aspect-ratio: 1;
+    height: 100%;
     object-fit: cover;
     display: block;
     transition: transform var(--dur-base) var(--ease-soft);
@@ -73,6 +78,12 @@ const t = useTranslations(lang);
   @media (min-width: 640px) {
     .hso-insta__grid {
       grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .hso-insta__grid {
+      grid-template-columns: repeat(6, 1fr);
     }
   }
 </style>
@@ -102,7 +113,7 @@ const t = useTranslations(lang);
       if (!res.ok) throw new Error(`request failed with ${res.status}`);
 
       const data: { posts: InstagramPost[] } = await res.json();
-      const posts = data.posts ?? [];
+      const posts = (data.posts ?? []).slice(0, 12);
 
       if (!posts.length) {
         showMessage(container.dataset.empty ?? "");
