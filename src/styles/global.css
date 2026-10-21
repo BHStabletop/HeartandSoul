@@ -18,8 +18,8 @@
   --text-on-ground: var(--hso-white);
   --text-on-light: var(--hso-green-deep);
 
-  --button-primary-bg: var(--hso-green-light);
-  --button-primary-fg: var(--hso-green-deep);
+  --button-primary-bg: var(--hso-green-deep);
+  --button-primary-fg: var(--hso-white);
   --button-secondary-bg: var(--hso-white);
   --button-secondary-fg: var(--hso-green-deep);
 
