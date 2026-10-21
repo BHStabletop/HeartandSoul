@@ -98,12 +98,9 @@ const isMulti = articles.length > 1;
 )}
 
 {detail && moods.length > 0 && (
-  <section class="hso-section hso-cd-mood">
-    <h2>{t("collectionDetail.moodHeading")}</h2>
-    <div class="hso-cd-carousel" aria-roledescription="carousel">
-      <button type="button" class="hso-cd-carousel__nav hso-cd-carousel__nav--prev" aria-label="◀" data-dir="-1" hidden={moods.length < 2}>
-        <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true"><path d="M14 2 3 14l11 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+  <section class="hso-cd-mood">
+    <h2 class="hso-cd-mood__heading">{t("collectionDetail.moodHeading")}</h2>
+    <div class="hso-cd-carousel" aria-roledescription="carousel" data-autoloop>
       <div class="hso-cd-carousel__track">
         {moods.map((src, i) => (
           <div class="hso-cd-carousel__slide">
@@ -111,9 +108,11 @@ const isMulti = articles.length > 1;
           </div>
         ))}
       </div>
-      <button type="button" class="hso-cd-carousel__nav hso-cd-carousel__nav--next" aria-label="▶" data-dir="1" hidden={moods.length < 2}>
-        <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true"><path d="M2 2l11 12L2 26" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+      {moods.length > 1 && (
+        <button type="button" class="hso-cd-carousel__nav hso-cd-carousel__nav--next" aria-label="Nächstes Bild">
+          <svg width="18" height="32" viewBox="0 0 18 32" fill="none" aria-hidden="true"><path d="M2 2l14 14L2 30" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      )}
     </div>
   </section>
 )}
@@ -121,16 +120,33 @@ const isMulti = articles.length > 1;
 {detail && <CatalogFlip startPage={detail.catalogPage} />}
 
 <script>
-  // --- Mood carousel: scroll one viewport per click ---
-  document.querySelectorAll<HTMLElement>(".hso-cd-carousel").forEach((carousel) => {
+  // --- Mood carousel: infinite auto-loop, right arrow only ---
+  document.querySelectorAll<HTMLElement>(".hso-cd-carousel[data-autoloop]").forEach((carousel) => {
     const track = carousel.querySelector<HTMLElement>(".hso-cd-carousel__track");
-    if (!track) return;
-    carousel.querySelectorAll<HTMLButtonElement>(".hso-cd-carousel__nav").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const dir = Number(btn.dataset.dir);
-        track.scrollBy({ left: dir * track.clientWidth, behavior: "smooth" });
-      });
-    });
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>(".hso-cd-carousel__slide"));
+    const nextBtn = carousel.querySelector<HTMLButtonElement>(".hso-cd-carousel__nav--next");
+    if (!track || slides.length < 2) return;
+
+    let current = 0;
+    const INTERVAL = 4000;
+
+    const goTo = (index: number, smooth = true) => {
+      current = ((index % slides.length) + slides.length) % slides.length;
+      track.scrollTo({ left: current * track.clientWidth, behavior: smooth ? "smooth" : "instant" });
+    };
+
+    let timer = setInterval(() => goTo(current + 1), INTERVAL);
+
+    const resetTimer = () => {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(current + 1), INTERVAL);
+    };
+
+    nextBtn?.addEventListener("click", () => { goTo(current + 1); resetTimer(); });
+
+    // Pause on hover/touch
+    carousel.addEventListener("mouseenter", () => clearInterval(timer));
+    carousel.addEventListener("mouseleave", () => resetTimer());
   });
 
   // --- Article colour slider: nav + dots + live colour label ---
@@ -339,8 +355,7 @@ const isMulti = articles.length > 1;
     height: auto;
     display: block;
   }
-  .hso-artslider__nav,
-  .hso-cd-carousel__nav {
+  .hso-artslider__nav {
     flex: 0 0 auto;
     display: grid;
     place-items: center;
@@ -354,8 +369,7 @@ const isMulti = articles.length > 1;
     opacity: 0.85;
     transition: opacity var(--dur-fast) var(--ease-soft);
   }
-  .hso-artslider__nav:hover,
-  .hso-cd-carousel__nav:hover {
+  .hso-artslider__nav:hover {
     opacity: 1;
   }
   .hso-artslider__label {
@@ -390,40 +404,84 @@ const isMulti = articles.length > 1;
     opacity: 1;
   }
 
-  /* ---------- Mood carousel ---------- */
+  /* ---------- Mood section ---------- */
+  .hso-cd-mood {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(24px, 4vw, 40px);
+    padding: clamp(56px, 9vw, 120px) 0 0;
+  }
+  .hso-cd-mood__heading {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+    text-align: center;
+    padding: 0 clamp(20px, 6vw, 120px);
+  }
+
+  /* ---------- Mood carousel: full-width with absolute right arrow ---------- */
   .hso-cd-carousel {
     position: relative;
     width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-left: clamp(16px, 5vw, 80px);
-    padding-right: clamp(16px, 5vw, 80px);
   }
   .hso-cd-carousel__track {
-    flex: 1;
     display: flex;
-    gap: 20px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-    border-radius: 24px;
   }
   .hso-cd-carousel__track::-webkit-scrollbar {
     display: none;
   }
   .hso-cd-carousel__slide {
     flex: 0 0 100%;
-    scroll-snap-align: center;
-    display: grid;
-    place-items: center;
+    scroll-snap-align: start;
   }
   .hso-cd-carousel__slide img {
-    width: min(900px, 100%);
-    height: auto;
+    width: 100%;
+    height: min(70vw, 640px);
+    object-fit: cover;
     display: block;
   }
-  .hso-cd-carousel__nav[hidden] {
-    display: none;
+  /* Right arrow: floats over the right side of the image */
+  .hso-cd-carousel__nav--next {
+    position: absolute;
+    right: clamp(12px, 3vw, 40px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.30);
+    color: var(--hso-white);
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-soft);
+    z-index: 2;
+  }
+  .hso-cd-carousel__nav--next:hover {
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  /* Above 1280px: contained layout with padding */
+  @media (min-width: 1281px) {
+    .hso-cd-mood {
+      padding-left: clamp(20px, 6vw, 120px);
+      padding-right: clamp(20px, 6vw, 120px);
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hso-cd-mood__heading {
+      padding: 0;
+    }
+    .hso-cd-carousel__slide img {
+      height: min(60vw, 700px);
+      border-radius: 24px;
+    }
   }
 </style>
