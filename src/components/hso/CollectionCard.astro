@@ -68,15 +68,15 @@ const { name, image, href, cta, external = false } = Astro.props;
   }
   .hso-card__bubble span {
     font-family: var(--font-display);
-    font-weight: 500;
+    font-weight: 700;
     /* The card is capped at 296px, so the name must NOT keep growing with the
        viewport (that overflowed the white area on wide screens). Capped so even
        a two-line name (e.g. "Perfect Match") fits the visible white with margin. */
     font-size: clamp(1.5rem, 1.3rem + 0.6vw, 2rem);
-    line-height: 1.12;
+    line-height: 1.0;
     color: var(--text-on-light);
     text-wrap: balance;
-    padding: 0 10%;
+    padding: 10% 10% 0;
   }
   .hso-card__plate img {
     position: absolute;
