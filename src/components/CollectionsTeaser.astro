@@ -1,5 +1,6 @@
 ---
 import CollectionCard from "./hso/CollectionCard.astro";
+import Button from "./hso/Button.astro";
 import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
 
 const lang = getLangFromUrl(Astro.url);
@@ -19,7 +20,7 @@ const kollektionenPath = getLocalizedPath("/kollektionen", lang);
       <CollectionCard name={c.name} image={c.image} href={getLocalizedPath(`/kollektionen/${c.slug}`, lang)} cta={t("collections.cta")} />
     ))}
   </div>
-  <a href={kollektionenPath} class="hso-navlink hso-teaser__all">{t("collections.viewAll")}</a>
+  <div class="hso-teaser__all"><Button href={kollektionenPath} variant="secondary">{t("collections.viewAll")}</Button></div>
 </section>
 
 <style>

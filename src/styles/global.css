@@ -20,8 +20,8 @@
 
   --button-primary-bg: var(--hso-green-light);
   --button-primary-fg: var(--hso-green-deep);
-  --button-secondary-bg: var(--hso-green-deep);
-  --button-secondary-fg: var(--hso-white);
+  --button-secondary-bg: var(--hso-white);
+  --button-secondary-fg: var(--hso-green-deep);
 
   --link-color: var(--hso-white);
   --link-color-hover: var(--hso-green-light);
