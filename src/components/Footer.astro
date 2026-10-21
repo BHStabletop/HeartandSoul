@@ -40,10 +40,6 @@ const year = new Date().getFullYear();
     <nav class="hso-footer__links">
       <a href={`${getLocalizedPath("/", lang)}#contact`} class="hso-footer__link">{t("nav.contact")}</a>
       <a href={getLocalizedPath("/impressum", lang)} class="hso-footer__link">{t("footer.impressum")}</a>
-      <a href={getLocalizedPath("/datenschutz", lang)} class="hso-footer__link">{t("footer.datenschutz")}</a>
-      <button type="button" class="hso-footer__link hso-footer__link--btn" onclick="window.dispatchEvent(new CustomEvent('cookie-consent:open'))">
-        {t("footer.cookieSettings")}
-      </button>
     </nav>
 
     <p class="hso-footer__copy">&copy;{year} BHS tabletop AG</p>
@@ -71,28 +67,29 @@ const year = new Date().getFullYear();
     position: relative;
     background: var(--hso-green-light);
     border-radius: 42% 58% 0 0 / 15% 22% 0 0;
-    padding: clamp(64px, 8vw, 104px) clamp(24px, 6vw, 96px) clamp(40px, 5vw, 56px);
+    padding: clamp(48px, 6vw, 80px) clamp(24px, 6vw, 96px) clamp(28px, 4vw, 44px);
   }
   .hso-footer__inner {
     position: relative;
     z-index: 1;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     display: grid;
-    gap: 40px;
-    justify-items: center;
-    text-align: center;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    column-gap: clamp(32px, 5vw, 80px);
+    row-gap: 0;
   }
   .hso-footer__logo {
     display: block;
     height: auto;
-    width: clamp(140px, 16vw, 190px);
+    width: clamp(120px, 14vw, 170px);
   }
   .hso-footer__insta {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 16px;
   }
   .hso-footer__handle {
     display: flex;
@@ -109,9 +106,9 @@ const year = new Date().getFullYear();
   }
   .hso-footer__links {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 18px 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
   }
   .hso-footer__link {
     font-family: var(--font-core);
@@ -127,6 +124,9 @@ const year = new Date().getFullYear();
     opacity: 0.75;
   }
   .hso-footer__copy {
+    grid-column: 1 / -1;
+    justify-self: end;
+    margin-top: clamp(20px, 3vw, 36px);
     font-family: var(--font-core);
     font-weight: var(--fw-core-light);
     font-size: var(--type-body-size);
@@ -134,27 +134,14 @@ const year = new Date().getFullYear();
     opacity: 0.75;
   }
 
-  @media (min-width: 900px) {
+  @media (max-width: 599px) {
     .hso-footer__inner {
-      grid-template-columns: auto 1fr auto;
-      justify-items: start;
-      text-align: left;
-      align-items: center;
-      column-gap: 48px;
-    }
-    .hso-footer__insta {
-      align-items: center;
-    }
-    .hso-footer__links {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 14px;
+      grid-template-columns: 1fr;
+      gap: 28px;
     }
     .hso-footer__copy {
-      grid-column: 1 / -1;
-      justify-self: end;
-      text-align: right;
-      margin-top: 8px;
+      justify-self: start;
+      margin-top: 0;
     }
   }
 </style>

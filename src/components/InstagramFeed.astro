@@ -50,8 +50,11 @@ const t = useTranslations(lang);
     width: 100%;
     max-width: 1100px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
     gap: 8px;
+    /* prevent any cell from stretching taller than its aspect-ratio */
+    align-items: start;
   }
   .hso-insta__grid a {
     display: block;
@@ -75,15 +78,9 @@ const t = useTranslations(lang);
     opacity: 0.75;
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: 500px) {
     .hso-insta__grid {
       grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  @media (min-width: 900px) {
-    .hso-insta__grid {
-      grid-template-columns: repeat(6, 1fr);
     }
   }
 </style>
