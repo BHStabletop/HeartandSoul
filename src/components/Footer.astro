@@ -1,9 +1,8 @@
 ---
 import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
-import { getBlob } from "./hso/blobs";
 
 interface Props {
-  /** Show the blob with a crop of the table just above the footer.
+  /** Show the breakfast-table banner just above the footer.
    *  Enabled on the homepage only; other pages get the plain mint footer. */
   mood?: boolean;
 }
@@ -13,21 +12,11 @@ const { mood = false } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const year = new Date().getFullYear();
-
-const blob = getBlob("wide");
-const blobId = `hso-footer-blob-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 {mood && (
-  <div class="hso-footer-blob" aria-hidden="true">
-    <svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden">
-      <defs>
-        <clipPath id={blobId} clipPathUnits="objectBoundingBox"><path d={blob.nd} /></clipPath>
-      </defs>
-    </svg>
-    <div class="hso-footer-blob__shape" style={{ clipPath: `url(#${blobId})`, WebkitClipPath: `url(#${blobId})` }}>
-      <img src="/footer-mood.jpg" alt="" loading="lazy" />
-    </div>
+  <div class="hso-footer-banner" aria-hidden="true">
+    <img src="/footer-mood-banner.webp" alt="" loading="lazy" />
   </div>
 )}
 
@@ -63,28 +52,18 @@ const blobId = `hso-footer-blob-${Math.random().toString(36).slice(2, 9)}`;
 
 <style>
   /* ---------- Blob with a table crop (homepage only) ---------- */
-  /* An organic blob at the lower-left, just above the footer, sitting on the
-     green page background and showing a cropped detail of the breakfast table. */
-  .hso-footer-blob {
+  /* Breakfast-table banner (its organic shape is baked into the image) just
+     above the footer, sitting on the green page background. ~50% of the width. */
+  .hso-footer-banner {
     position: relative;
     z-index: 1;
     padding-left: clamp(16px, 4vw, 64px);
-    margin-bottom: clamp(-70px, -6vw, -36px);
+    margin-bottom: clamp(-60px, -5vw, -30px);
   }
-  .hso-footer-blob__shape {
-    /* ~2/3 of the page wide, but kept to roughly the previous height so it
-       grows sideways only (the clip-path scales to the box). */
-    width: min(66vw, 940px);
-    height: clamp(200px, 31vw, 340px);
-    overflow: hidden;
-    background: var(--surface-blob);
-  }
-  .hso-footer-blob__shape img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 45%;
+  .hso-footer-banner img {
     display: block;
+    width: clamp(280px, 50vw, 740px);
+    height: auto;
   }
 
   /* ---------- Mint footer (all pages) ---------- */
