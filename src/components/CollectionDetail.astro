@@ -165,10 +165,16 @@ const isMulti = articles.length > 1;
 </script>
 
 <style>
-  /* ---------- Hero (full-bleed, name + shape baked into the image) ---------- */
+  /* ---------- Hero (full-bleed banner, same style as the homepage) ---------- */
   .hso-cd-hero {
     position: relative;
+    /* Pull up under the transparent sticky header so the image is full-bleed
+       to the very top and the logo/menu overlay it (homepage hero style). */
     margin-top: -110px;
+    height: min(84vw, 820px);
+    min-height: 340px;
+    overflow: hidden;
+    border-radius: 0 0 62% 42% / 0 0 8% 6%;
   }
   @media (min-width: 900px) {
     .hso-cd-hero {
@@ -176,13 +182,14 @@ const isMulti = articles.length > 1;
     }
   }
   .hso-cd-hero__image {
-    width: 100%;
+    position: absolute;
+    inset: 0;
   }
   .hso-cd-hero__image img {
     width: 100%;
-    max-width: 1600px;
-    margin: 0 auto;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 38%;
     display: block;
   }
   .hso-cd-hero__scroll {

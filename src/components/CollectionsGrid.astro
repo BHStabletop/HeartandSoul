@@ -45,10 +45,18 @@ const titleCase = (s: string) =>
 <style>
   .hso-kollhero {
     position: relative;
-    height: min(50vw, 460px);
-    min-height: 240px;
+    /* Pull up under the transparent sticky header so the image is full-bleed
+       to the very top and the logo/menu overlay it (homepage hero style). */
+    margin-top: -110px;
+    height: min(74vw, 620px);
+    min-height: 320px;
     overflow: hidden;
     border-radius: 0 0 62% 42% / 0 0 8% 6%;
+  }
+  @media (min-width: 900px) {
+    .hso-kollhero {
+      margin-top: -135px;
+    }
   }
   .hso-kollhero__image {
     position: absolute;
