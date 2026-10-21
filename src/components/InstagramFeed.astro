@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/ui";
+import Button from "./hso/Button.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -19,9 +20,7 @@ const t = useTranslations(lang);
     <p class="hso-insta__status">{t("instagram.loading")}</p>
   </div>
 
-  <a href="https://www.instagram.com/bhs.tabletop/" target="_blank" rel="noopener noreferrer" class="hso-navlink hso-insta__cta">
-    {t("instagram.cta")} &rarr;
-  </a>
+  <Button href="https://www.instagram.com/bhs.tabletop/" variant="secondary" target="_blank" rel="noopener noreferrer">{t("instagram.cta")}</Button>
 </section>
 
 <style>
