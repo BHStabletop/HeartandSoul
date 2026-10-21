@@ -57,12 +57,12 @@ const year = new Date().getFullYear();
   .hso-footer-banner {
     position: relative;
     z-index: 1;
-    padding-left: clamp(16px, 4vw, 64px);
     margin-bottom: clamp(-60px, -5vw, -30px);
   }
   .hso-footer-banner img {
     display: block;
-    width: clamp(280px, 50vw, 740px);
+    /* Flush to the very left edge, reaching exactly the middle of the screen. */
+    width: 50vw;
     height: auto;
   }
 
