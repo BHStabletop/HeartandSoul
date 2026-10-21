@@ -22,6 +22,8 @@
   --button-primary-fg: var(--hso-white);
   --button-secondary-bg: var(--hso-white);
   --button-secondary-fg: var(--hso-green-deep);
+  --button-tertiary-bg: var(--hso-green-light);
+  --button-tertiary-fg: var(--hso-white);
 
   --link-color: var(--hso-white);
   --link-color-hover: var(--hso-green-light);
@@ -128,6 +130,10 @@ a {
 .hso-btn--secondary {
   background: var(--button-secondary-bg);
   color: var(--button-secondary-fg);
+}
+.hso-btn--tertiary {
+  background: var(--button-tertiary-bg);
+  color: var(--button-tertiary-fg);
 }
 .hso-btn svg {
   display: block;
