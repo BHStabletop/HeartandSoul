@@ -73,23 +73,26 @@ const year = new Date().getFullYear();
   .hso-footer__inner {
     position: relative;
     z-index: 1;
-    max-width: 1100px;
+    width: min(80%, 1100px);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    column-gap: clamp(32px, 5vw, 80px);
+    column-gap: clamp(24px, 4vw, 60px);
     row-gap: 0;
   }
+  /* Column 1 (logo): centred */
   .hso-footer__logo {
     display: block;
     height: auto;
-    width: clamp(120px, 14vw, 170px);
+    width: clamp(110px, 12vw, 160px);
+    margin: 0 auto;
   }
+  /* Column 2 (Instagram): centred */
   .hso-footer__insta {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 16px;
   }
   .hso-footer__handle {
@@ -105,6 +108,7 @@ const year = new Date().getFullYear();
   .hso-footer__handle img {
     filter: brightness(0) invert(1);
   }
+  /* Column 3 (links): left-aligned */
   .hso-footer__links {
     display: flex;
     flex-direction: column;
@@ -137,8 +141,15 @@ const year = new Date().getFullYear();
 
   @media (max-width: 599px) {
     .hso-footer__inner {
+      width: 90%;
       grid-template-columns: 1fr;
       gap: 28px;
+    }
+    .hso-footer__logo {
+      margin: 0;
+    }
+    .hso-footer__insta {
+      align-items: flex-start;
     }
     .hso-footer__copy {
       justify-self: start;
