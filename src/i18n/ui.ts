@@ -34,7 +34,7 @@ export const ui = {
     "collections.subtitle":
       "Von organisch bis strukturiert, von zartem Pastell bis kräftigem Indigo – jede HEART&SOUL Kollektion hat ihren eigenen Charakter. Alle sind easy kombinierbar und bringen gute Laune auf jeden Tisch. Stöbere durch die Kollektionen und finde die, die zu deinem Konzept passt. Mix & Match? Unbedingt.",
     "collections.cta": "Zur Kollektion",
-    "collections.viewAll": "Alle Kollektionen ansehen →",
+    "collections.viewAll": "Alle Kollektionen ansehen",
 
     "action.imageAlt": "Gedeckter Tisch mit HEART&SOUL Geschirr",
     "action.heading": "See it in<br />action",
@@ -117,7 +117,7 @@ export const ui = {
     "collections.subtitle":
       "From organic to structured, from soft pastel to bold indigo — every HEART&SOUL collection has its own character. All of them mix and match effortlessly and bring good vibes to every table. Browse the collections and find the one that fits your concept. Mix & match? Absolutely.",
     "collections.cta": "View collection",
-    "collections.viewAll": "View all collections →",
+    "collections.viewAll": "View all collections",
 
     "action.imageAlt": "Table set with HEART&SOUL tableware",
     "action.heading": "See it in<br />action",
