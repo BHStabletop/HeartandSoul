@@ -102,11 +102,11 @@ const year = new Date().getFullYear();
     font-family: var(--font-core);
     font-weight: var(--fw-core-semi);
     font-size: var(--type-nav-size);
-    color: var(--hso-white);
+    color: var(--hso-green-deep);
   }
-  /* Recolour the instagram glyph to white to match the handle text. */
+  /* Recolour the instagram glyph to dark green to match the handle text. */
   .hso-footer__handle img {
-    filter: brightness(0) invert(1);
+    filter: brightness(0) saturate(100%) invert(38%) sepia(22%) saturate(600%) hue-rotate(95deg) brightness(85%) contrast(95%);
   }
   /* Column 3 (links): left-aligned */
   .hso-footer__links {
@@ -119,7 +119,7 @@ const year = new Date().getFullYear();
     font-family: var(--font-core);
     font-weight: var(--fw-core-semi);
     font-size: var(--type-nav-size);
-    color: var(--hso-white);
+    color: var(--hso-green-deep);
     text-decoration: none;
     background: none;
     border: 0;

@@ -23,7 +23,7 @@
   --button-secondary-bg: var(--hso-white);
   --button-secondary-fg: var(--hso-green-deep);
   --button-tertiary-bg: var(--hso-green-light);
-  --button-tertiary-fg: var(--hso-white);
+  --button-tertiary-fg: var(--hso-green-deep);
 
   --link-color: var(--hso-white);
   --link-color-hover: var(--hso-green-light);

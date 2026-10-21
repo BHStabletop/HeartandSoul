@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://heartandsoul-90u.pages.dev/sitemap-index.xml
