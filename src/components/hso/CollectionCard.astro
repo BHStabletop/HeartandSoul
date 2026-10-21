@@ -48,7 +48,8 @@ const { name, image, href, cta, external = false } = Astro.props;
   }
   .hso-card__bubble {
     position: absolute;
-    left: -4%;
+    /* Centre the bubble (width 74%) horizontally over the plate: (100-74)/2. */
+    left: 13%;
     top: -30%;
     width: 74%;
     z-index: 1;
@@ -66,7 +67,7 @@ const { name, image, href, cta, external = false } = Astro.props;
   }
   .hso-card__bubble span {
     font-family: var(--font-display);
-    font-weight: var(--fw-display-bold);
+    font-weight: 500;
     font-size: var(--type-collection-size);
     line-height: var(--type-collection-lh);
     color: var(--text-on-light);
