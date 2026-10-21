@@ -87,6 +87,8 @@ export const ui = {
     "collectionDetail.shopCta": "Jetzt entdecken",
     "collectionDetail.productCta": "Zur Produktübersicht",
     "collectionDetail.referencesCta": "Zu den Referenzen",
+    "collectionDetail.moodHeading": "Impressionen",
+    "collectionDetail.colorLabel": "Farbe",
     "collectionDetail.backLink": "← Alle Kollektionen",
   },
   en: {
@@ -168,6 +170,8 @@ export const ui = {
     "collectionDetail.shopCta": "Discover now",
     "collectionDetail.productCta": "To the product overview",
     "collectionDetail.referencesCta": "To the references",
+    "collectionDetail.moodHeading": "Impressions",
+    "collectionDetail.colorLabel": "Colour",
     "collectionDetail.backLink": "← All collections",
   },
 } as const;
