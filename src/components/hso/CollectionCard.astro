@@ -48,8 +48,9 @@ const { name, image, href, cta, external = false } = Astro.props;
   }
   .hso-card__bubble {
     position: absolute;
-    /* Centre the bubble (width 74%) horizontally over the plate: (100-74)/2. */
-    left: 13%;
+    /* Bubble sits slightly offset to the left over the plate (organic look);
+       the name is centred within the bubble itself. */
+    left: -4%;
     top: -30%;
     width: 74%;
     z-index: 1;
