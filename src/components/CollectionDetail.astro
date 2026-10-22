@@ -16,24 +16,33 @@ if (!collection) throw new Error(`Unknown collection slug: ${slug}`);
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const name = collection.name
-  .toLowerCase()
-  .replace(/(^|[\s-])([a-z])/g, (_, sep, ch) => sep + ch.toUpperCase());
+const name = collection.name;
 const description = lang === "de" ? collection.descriptionDe : collection.descriptionEn;
 const shopUrl = lang === "de" ? collection.urlDe : collection.urlEn;
 
 const detail = collection.detail;
-const heading = detail ? (lang === "de" ? detail.headingDe : detail.headingEn) : undefined;
+const kicker = detail?.kicker;
 const body = detail ? (lang === "de" ? detail.bodyDe : detail.bodyEn) : description;
 const articles = detail?.articles ?? [];
 const moods = detail?.moods ?? [];
 const isMulti = articles.length > 1;
+
+// Alt-text fragments (no dashes, uppercase collection + variant names).
+const heroAlt =
+  lang === "de"
+    ? `${name} Geschirr von HEART&SOUL auf gedecktem Tisch`
+    : `${name} tableware by HEART&SOUL on a set table`;
+const setSuffix = lang === "de" ? "Geschirr-Set" : "tableware set";
+const singleSuffix = lang === "de" ? "Geschirr-Set im Überblick" : "tableware set";
+const singleColor = articles[0]?.color ? ` ${articles[0].color.toUpperCase()}` : "";
+const variantTeaser = (a: (typeof articles)[number]) =>
+  (lang === "de" ? a.teaserDe : a.teaserEn) ?? "";
 ---
 
 {detail ? (
   <section class="hso-cd-hero">
     <div class="hso-cd-hero__image">
-      <img src={detail.header} alt={`${name} — HEART&SOUL`} fetchpriority="high" />
+      <img src={detail.header} alt={heroAlt} fetchpriority="high" />
     </div>
     <a href="#intro" class="hso-cd-hero__scroll" aria-label={t("hero.scrollCue")}>
       <svg width="18" height="34" viewBox="0 0 18 34" fill="none" aria-hidden="true">
@@ -53,7 +62,8 @@ const isMulti = articles.length > 1;
 )}
 
 <section id="intro" class="hso-section hso-cd-intro">
-  {heading ? <h1>{heading}</h1> : <h1 class="hso-cd-intro__sr">{name}</h1>}
+  {kicker && <p class="hso-cd-intro__kicker">{kicker}</p>}
+  <h1>{name}</h1>
   <p>{body}</p>
 </section>
 
@@ -69,8 +79,8 @@ const isMulti = articles.length > 1;
           </button>
           <div class="hso-artslider__track">
             {articles.map((a, i) => (
-              <div class="hso-artslider__slide" data-color={a.color ?? ""}>
-                <img src={a.image} alt={`${name} ${a.color ?? ""}`.trim()} loading={i === 0 ? "eager" : "lazy"} />
+              <div class="hso-artslider__slide" data-color={(a.color ?? "").toUpperCase()} data-teaser={variantTeaser(a)}>
+                <img src={a.image} alt={`${name} ${(a.color ?? "").toUpperCase()} ${setSuffix}`.replace(/\s+/g, " ").trim()} loading={i === 0 ? "eager" : "lazy"} />
               </div>
             ))}
           </div>
@@ -78,16 +88,17 @@ const isMulti = articles.length > 1;
             <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true"><path d="M2 2l11 12L2 26" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
-        <p class="hso-artslider__label"><span class="hso-artslider__labelcaption">{t("collectionDetail.colorLabel")}:</span> <span data-artlabel>{articles[0].color}</span></p>
+        <p class="hso-artslider__label"><span class="hso-artslider__labelcaption">{t("collectionDetail.colorLabel")}:</span> <span data-artlabel>{articles[0].color?.toUpperCase()}</span></p>
+        <p class="hso-artslider__teaser" data-artteaser>{variantTeaser(articles[0])}</p>
         <div class="hso-artslider__dots" role="tablist">
           {articles.map((a, i) => (
-            <button type="button" class="hso-artslider__dot" data-index={i} aria-label={a.color ?? `${i + 1}`}></button>
+            <button type="button" class="hso-artslider__dot" data-index={i} aria-label={(a.color ?? "").toUpperCase() || `${i + 1}`}></button>
           ))}
         </div>
       </div>
     ) : (
       <div class="hso-cd-articles__single">
-        <img src={articles[0].image} alt={`${name} ${t("collectionDetail.setHeading")}`} loading="lazy" />
+        <img src={articles[0].image} alt={`${name}${singleColor} ${singleSuffix}`} loading="lazy" />
       </div>
     )}
 
@@ -109,7 +120,7 @@ const isMulti = articles.length > 1;
         ))}
       </div>
       {moods.length > 1 && (
-        <button type="button" class="hso-cd-carousel__nav hso-cd-carousel__nav--next" aria-label="Nächstes Bild">
+        <button type="button" class="hso-cd-carousel__nav hso-cd-carousel__nav--next" aria-label={t("collectionDetail.nextImage")}>
           <svg width="18" height="32" viewBox="0 0 18 32" fill="none" aria-hidden="true"><path d="M2 2l14 14L2 30" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       )}
@@ -153,6 +164,7 @@ const isMulti = articles.length > 1;
   document.querySelectorAll<HTMLElement>("[data-artslider]").forEach((slider) => {
     const track = slider.querySelector<HTMLElement>(".hso-artslider__track");
     const label = slider.querySelector<HTMLElement>("[data-artlabel]");
+    const teaserEl = slider.querySelector<HTMLElement>("[data-artteaser]");
     const slides = Array.from(slider.querySelectorAll<HTMLElement>(".hso-artslider__slide"));
     const dots = Array.from(slider.querySelectorAll<HTMLButtonElement>(".hso-artslider__dot"));
     if (!track || slides.length === 0) return;
@@ -161,6 +173,7 @@ const isMulti = articles.length > 1;
     const setActive = (i: number) => {
       const color = slides[i]?.dataset.color ?? "";
       if (label) label.textContent = color;
+      if (teaserEl) teaserEl.textContent = slides[i]?.dataset.teaser ?? "";
       dots.forEach((d, di) => d.setAttribute("aria-selected", String(di === i)));
     };
 
@@ -270,17 +283,15 @@ const isMulti = articles.length > 1;
     margin: 0;
     max-width: 780px;
   }
-  /* Visually hidden heading (keeps one H1 for a11y when no custom heading) */
-  .hso-cd-intro__sr {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  /* Kicker: small uppercase claim above the H1 (eyebrow style) */
+  .hso-cd-intro__kicker {
+    font-family: var(--font-core);
+    font-weight: var(--fw-core-semi);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--hso-green-light);
+    margin: 0;
   }
   .hso-cd-intro p {
     max-width: 620px;
@@ -380,6 +391,16 @@ const isMulti = articles.length > 1;
   }
   .hso-artslider__labelcaption {
     opacity: 0.7;
+  }
+  .hso-artslider__teaser {
+    margin: 0;
+    max-width: 560px;
+    text-align: center;
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
+    opacity: 0.92;
   }
   .hso-artslider__dots {
     display: flex;

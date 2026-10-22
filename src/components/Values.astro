@@ -19,6 +19,7 @@ const PROPERTIES = [
 
 <section id="values" class="hso-section hso-values">
   <h2>{t("values.heading")}</h2>
+  <p class="hso-values__intro">{t("values.intro")}</p>
   <div class="hso-values__grid">
     {PROPERTIES.map((p) => (
       <PropertyBadge icon={p.icon} label={t(`values.${p.key}` as any)} />
@@ -34,7 +35,15 @@ const PROPERTIES = [
     font-size: var(--type-display-size);
     line-height: var(--type-display-lh);
     color: var(--hso-white);
-    margin: 0 0 clamp(40px, 6vw, 80px);
+    margin: 0 0 24px;
+  }
+  .hso-values__intro {
+    max-width: 620px;
+    margin: 0 auto clamp(40px, 6vw, 80px);
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
   }
   .hso-values__grid {
     display: grid;

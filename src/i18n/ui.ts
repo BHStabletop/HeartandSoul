@@ -9,8 +9,9 @@ export const defaultLang: Lang = "de";
 
 export const ui = {
   de: {
-    "site.title": "HEART&SOUL",
-    "site.description": "HEART&SOUL — Geschirr-Kollektionen für die moderne Gastronomie.",
+    "site.title": "HEART&SOUL | Love at first sight",
+    "site.description":
+      "HEART&SOUL ist buntes Gastro-Geschirr, das einfach passt. Entdecke FLOW, BALANCE, PINE, MIRAGE, SOULMATE und PERFECT MATCH für Café, Brunch und Street Food.",
 
     "nav.home": "Startseite",
     "nav.collections": "Kollektionen",
@@ -25,27 +26,29 @@ export const ui = {
 
     "about.heading": "Good vibes only",
     "about.body":
-      "HEART&SOUL bringt frischen Wind in die moderne Gastronomie: trendy, unkompliziert und voller Emotion. Vielseitige Designs, natürliche Texturen und trendige Glasuren schaffen eine Atmosphäre voller Genuss und Geselligkeit.",
+      "HEART&SOUL bringt frischen Wind in die moderne Gastronomie: trendy, unkompliziert und voller Emotion. Bunte Glasuren und natürliche Texturen bringen gute Laune auf jeden Tisch, ob Street Food, Brunch oder regionale Klassiker. Geschirr ohne Schnickschnack, das einfach passt.",
     "about.cta": "Mehr zur Marke",
 
     "collections.eyebrow": "Kollektionen",
     "collections.title": "Kollektionen",
-    "collections.heading": "Finde deinen Favorit",
+    "collections.heading": "Finde deine Lieblingskollektion",
     "collections.subtitle":
-      "Von organisch bis strukturiert, von zartem Pastell bis kräftigem Indigo – jede HEART&SOUL Kollektion hat ihren eigenen Charakter. Alle sind easy kombinierbar und bringen gute Laune auf jeden Tisch. Stöbere durch die Kollektionen und finde die, die zu deinem Konzept passt. Mix & Match? Unbedingt.",
+      "Von organisch bis strukturiert, von zartem Pastell bis kräftigem Indigo: Jede HEART&SOUL-Kollektion hat ihren eigenen Charakter. Alle lassen sich einfach kombinieren und bringen gute Laune auf jeden Tisch. Mix & Match? Unbedingt.",
     "collections.cta": "Zur Kollektion",
     "collections.viewAll": "Alle Kollektionen ansehen",
 
     "action.imageAlt": "Gedeckter Tisch mit HEART&SOUL Geschirr",
     "action.heading": "See it in<br />action",
     "action.body":
-      "Hier siehst du unsere Kollektionen da, wo sie am schönsten sind: mitten im echten Gastro-Alltag. Lass dich inspirieren, entdecke neue Farbkombis und finde das Setting, das zu deinem Konzept passt.",
+      "Hier siehst du unsere Kollektionen da, wo sie am schönsten sind: mitten im echten Gastro-Alltag, zwischen Brunch-Bowls, Pizza und Espresso. Entdecke neue Farbkombis und finde das Setting, das zu deinem Konzept passt.",
     "action.cta": "Mehr entdecken",
 
     "values.heading": "Good to know",
-    "values.dishwasher": "Spülmaschinen-\ngeeignet",
-    "values.microwave": "Mikrowellen-\ngeeignet",
-    "values.oven": "Backofenfest",
+    "values.intro":
+      "HEART&SOUL-Teile sind gemacht für deinen Gastro-Alltag. Ob internationale Food-Kreationen oder regionale Klassiker: Auf HEART&SOUL sieht alles authentisch aus. Die Glasur schützt die Designs, also einfach ab in die Spülmaschine. Viele Teile sind stapelbar, mega praktisch für kleine Küchen. Und jedes Teil ist ein Unikat, mit Farbvarianzen, die den handwerklichen Look betonen.",
+    "values.dishwasher": "Spülmaschinen­fest",
+    "values.microwave": "Mikrowellen­geeignet",
+    "values.oven": "Ofenfest",
     "values.stackable": "Stapelbar",
     "values.unique": "Unikate",
     "values.colourVariance": "Farbvarianz",
@@ -54,12 +57,13 @@ export const ui = {
 
     "contact.eyebrow": "Kontakt",
     "contact.title": "Lass uns sprechen",
-    "contact.subtitle": "Du hast ein Projekt im Kopf oder einfach eine Frage? Schreib uns.",
+    "contact.subtitle":
+      "Du planst ein neues Konzept oder brauchst schnell Nachschub? Viele Teile sind lagerhaltig. Schreib uns.",
     "contact.email": "hallo@heartandsoul.example",
     "contact.cta": "Kontakt aufnehmen",
 
     "footer.instagramHandle": "heartandsoul.tableware",
-    "footer.instagramCta": "Follow us on Instagram",
+    "footer.instagramCta": "Folge uns auf Instagram",
     "footer.rights": "Alle Rechte vorbehalten.",
     "footer.impressum": "Impressum",
     "footer.datenschutz": "Datenschutz",
@@ -77,11 +81,22 @@ export const ui = {
 
     "instagram.eyebrow": "Community",
     "instagram.title": "#MyHeartAndSoulMoment",
-    "instagram.subtitle": "Momente unserer Community mit HEART&SOUL — direkt von @bhs.tabletop auf Instagram.",
+    "instagram.subtitle":
+      "Echte Momente aus unserer Community: So sieht HEART&SOUL im Gastro-Alltag aus. Direkt von @bhs.tabletop auf Instagram.",
     "instagram.loading": "Beiträge werden geladen …",
     "instagram.empty": "Aktuell sind keine Beiträge mit #MyHeartAndSoulMoment verfügbar.",
     "instagram.error": "Instagram-Beiträge konnten gerade nicht geladen werden.",
     "instagram.cta": "Mehr auf Instagram ansehen",
+
+    "catalog.heading": "Katalog",
+    "catalog.prev": "Zurückblättern",
+    "catalog.next": "Weiterblättern",
+    "catalog.cue": "Zum Blättern tippen",
+    "catalog.page": "Seite",
+    "catalog.zoom": "Vergrößern",
+    "catalog.zoomAria": "Seite vergrößern",
+    "catalog.zoomAlt": "Katalog Seite",
+    "catalog.close": "Schließen",
 
     "collectionDetail.setHeading": "Das Set im Überblick",
     "collectionDetail.inActionHeading": "See it in action",
@@ -90,11 +105,13 @@ export const ui = {
     "collectionDetail.referencesCta": "Zu den Referenzen",
     "collectionDetail.moodHeading": "Impressionen",
     "collectionDetail.colorLabel": "Farbe",
+    "collectionDetail.nextImage": "Nächstes Bild",
     "collectionDetail.backLink": "← Alle Kollektionen",
   },
   en: {
-    "site.title": "HEART&SOUL",
-    "site.description": "HEART&SOUL — tableware collections for modern hospitality.",
+    "site.title": "HEART&SOUL | Love at first sight",
+    "site.description":
+      "HEART&SOUL is colorful tableware for modern hospitality that simply fits. Discover FLOW, BALANCE, PINE, MIRAGE, SOULMATE and PERFECT MATCH for cafés, brunch and street food.",
 
     "nav.home": "Home",
     "nav.collections": "Collections",
@@ -109,36 +126,39 @@ export const ui = {
 
     "about.heading": "Good vibes only",
     "about.body":
-      "HEART&SOUL brings fresh energy to modern hospitality: trendy, uncomplicated and full of emotion. Versatile designs, natural textures and on-trend glazes create an atmosphere of enjoyment and togetherness.",
+      "HEART&SOUL brings a fresh breeze to modern hospitality: trendy, uncomplicated and full of emotion. Colorful glazes and natural textures bring good vibes to every table, whether street food, brunch or regional classics. Tableware without the frills that simply fits.",
     "about.cta": "More about the brand",
 
     "collections.eyebrow": "Collections",
     "collections.title": "Collections",
-    "collections.heading": "Find your favourite",
+    "collections.heading": "Find your favorite",
     "collections.subtitle":
-      "From organic to structured, from soft pastel to bold indigo — every HEART&SOUL collection has its own character. All of them mix and match effortlessly and bring good vibes to every table. Browse the collections and find the one that fits your concept. Mix & match? Absolutely.",
+      "From organic to textured, from soft pastel to bold indigo: every HEART&SOUL collection has its own character. They all combine easily and bring good vibes to every table. Mix & match? Absolutely.",
     "collections.cta": "View collection",
     "collections.viewAll": "View all collections",
 
     "action.imageAlt": "Table set with HEART&SOUL tableware",
     "action.heading": "See it in<br />action",
     "action.body":
-      "See our collections where they shine brightest: right in the middle of everyday hospitality. Get inspired, discover new colour combinations and find the setting that fits your concept.",
+      "See our collections where they shine brightest: right in the middle of everyday hospitality, between brunch bowls, pizza and espresso. Discover new color combos and find the setting that fits your concept.",
     "action.cta": "Discover more",
 
     "values.heading": "Good to know",
-    "values.dishwasher": "Dishwasher\nsafe",
-    "values.microwave": "Microwave\nsafe",
-    "values.oven": "Oven safe",
+    "values.intro":
+      "HEART&SOUL pieces are made for your everyday restaurant routine. Whether international food creations or regional classics, everything looks authentic on HEART&SOUL. The glaze protects the designs, so straight into the dishwasher they go. Many pieces are stackable, super practical for small kitchens. And every piece is one of a kind, with color variations that highlight the artisanal look.",
+    "values.dishwasher": "Dishwasher-safe",
+    "values.microwave": "Microwave-safe",
+    "values.oven": "Oven-safe",
     "values.stackable": "Stackable",
-    "values.unique": "One of a kind",
-    "values.colourVariance": "Colour variance",
+    "values.unique": "Unique pieces",
+    "values.colourVariance": "Variation in color",
     "values.inStock": "In stock",
-    "values.fairProduced": "Fairly produced",
+    "values.fairProduced": "Fair production",
 
     "contact.eyebrow": "Contact",
     "contact.title": "Let's talk",
-    "contact.subtitle": "Got a project in mind, or just a question? Write to us.",
+    "contact.subtitle":
+      "Planning a new concept or need a quick restock? Many pieces are in stock. Write to us.",
     "contact.email": "hallo@heartandsoul.example",
     "contact.cta": "Get in touch",
 
@@ -161,11 +181,22 @@ export const ui = {
 
     "instagram.eyebrow": "Community",
     "instagram.title": "#MyHeartAndSoulMoment",
-    "instagram.subtitle": "Community moments with HEART&SOUL — straight from @bhs.tabletop on Instagram.",
+    "instagram.subtitle":
+      "Real moments from our community: this is HEART&SOUL in everyday hospitality. Straight from @bhs.tabletop on Instagram.",
     "instagram.loading": "Loading posts …",
     "instagram.empty": "No posts with #MyHeartAndSoulMoment are available right now.",
     "instagram.error": "Instagram posts couldn't be loaded right now.",
     "instagram.cta": "See more on Instagram",
+
+    "catalog.heading": "Catalog",
+    "catalog.prev": "Previous page",
+    "catalog.next": "Next page",
+    "catalog.cue": "Tap to flip",
+    "catalog.page": "Page",
+    "catalog.zoom": "Zoom in",
+    "catalog.zoomAria": "Zoom in",
+    "catalog.zoomAlt": "Catalog page",
+    "catalog.close": "Close",
 
     "collectionDetail.setHeading": "The set at a glance",
     "collectionDetail.inActionHeading": "See it in action",
@@ -173,7 +204,8 @@ export const ui = {
     "collectionDetail.productCta": "To the product overview",
     "collectionDetail.referencesCta": "To the references",
     "collectionDetail.moodHeading": "Impressions",
-    "collectionDetail.colorLabel": "Colour",
+    "collectionDetail.colorLabel": "Color",
+    "collectionDetail.nextImage": "Next image",
     "collectionDetail.backLink": "← All collections",
   },
 } as const;

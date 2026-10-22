@@ -1,9 +1,14 @@
 ---
+import { getLangFromUrl, useTranslations } from "../i18n/ui";
+
 interface Props {
   /** 1-based catalogue page to open to. */
   startPage?: number;
 }
 const { startPage = 1 } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const PAGES = 148;
 const images = Array.from(
@@ -12,11 +17,11 @@ const images = Array.from(
 );
 ---
 
-<section class="hso-section hso-catalog" data-start={startPage}>
-  <h2>Katalog</h2>
+<section class="hso-section hso-catalog" data-start={startPage} data-zoomalt={t("catalog.zoomAlt")}>
+  <h2>{t("catalog.heading")}</h2>
 
   <div class="hso-catalog__stage">
-    <button type="button" class="hso-catalog__nav hso-catalog__nav--prev" aria-label="Zurückblättern">
+    <button type="button" class="hso-catalog__nav hso-catalog__nav--prev" aria-label={t("catalog.prev")}>
       <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true"><path d="M14 2 3 14l11 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
 
@@ -24,23 +29,23 @@ const images = Array.from(
       <div class="hso-catalog__book" id="hso-flipbook"></div>
       <div class="hso-catalog__placeholder" aria-hidden="true">
         <img src="/catalog/page-001.webp" alt="" loading="lazy" />
-        <span class="hso-catalog__cue">Zum Blättern tippen</span>
+        <span class="hso-catalog__cue">{t("catalog.cue")}</span>
       </div>
     </div>
 
-    <button type="button" class="hso-catalog__nav hso-catalog__nav--next" aria-label="Weiterblättern">
+    <button type="button" class="hso-catalog__nav hso-catalog__nav--next" aria-label={t("catalog.next")}>
       <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true"><path d="M2 2l11 12L2 26" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 
   <div class="hso-catalog__bar">
-    <p class="hso-catalog__counter">Seite <span data-cur>–</span> / {PAGES}</p>
-    <button type="button" class="hso-catalog__zoom" aria-label="Seite vergrößern">
+    <p class="hso-catalog__counter">{t("catalog.page")} <span data-cur>1</span> / {PAGES}</p>
+    <button type="button" class="hso-catalog__zoom" aria-label={t("catalog.zoomAria")}>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
         <path d="M21 21l-4.3-4.3M11 8v6M8 11h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
-      <span>Vergrößern</span>
+      <span>{t("catalog.zoom")}</span>
     </button>
   </div>
 
@@ -48,7 +53,7 @@ const images = Array.from(
 </section>
 
 <div class="hso-catalog-lightbox" id="hso-catalog-lightbox" hidden>
-  <button type="button" class="hso-catalog-lightbox__close" aria-label="Schließen">&times;</button>
+  <button type="button" class="hso-catalog-lightbox__close" aria-label={t("catalog.close")}>&times;</button>
   <div class="hso-catalog-lightbox__stage"></div>
 </div>
 
@@ -132,7 +137,7 @@ const images = Array.from(
       for (const p of pages) {
         const img = document.createElement("img");
         img.src = zoomSrc(p);
-        img.alt = `Katalog Seite ${p}`;
+        img.alt = `${section.dataset.zoomalt ?? "Catalog page"} ${p}`;
         img.className = "hso-catalog-lightbox__page";
         img.addEventListener("click", () => img.classList.toggle("is-zoomed"));
         stage.appendChild(img);

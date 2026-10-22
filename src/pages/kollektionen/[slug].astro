@@ -11,9 +11,10 @@ export function getStaticPaths() {
 
 const { collection } = Astro.props;
 const name = collection.name;
+const description = collection.detail?.metaDe ?? collection.descriptionDe;
 ---
 
-<Layout title={`${name} — HEART&SOUL`} description={collection.descriptionDe}>
+<Layout title={`${name} | HEART&SOUL`} description={description}>
   <Header />
   <main>
     <CollectionDetail slug={collection.slug} />

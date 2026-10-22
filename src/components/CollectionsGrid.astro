@@ -6,13 +6,6 @@ import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-const titleCase = (s: string) =>
-  s
-    .toLowerCase()
-    .split(/([\s-])/)
-    .map((part) => (/[\s-]/.test(part) ? part : part.charAt(0).toUpperCase() + part.slice(1)))
-    .join("");
 ---
 
 <section class="hso-kollhero">
@@ -29,7 +22,7 @@ const titleCase = (s: string) =>
 <section class="hso-section hso-kollgrid">
   {collections.map((collection) => (
     <CollectionCard
-      name={titleCase(collection.name)}
+      name={collection.name}
       image={collection.image}
       href={getLocalizedPath(`/kollektionen/${collection.slug}`, lang)}
       cta={t("collections.cta")}
