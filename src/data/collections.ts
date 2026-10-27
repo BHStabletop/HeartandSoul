@@ -99,7 +99,7 @@ export const collections: Collection[] = [
       metaEn:
         "BALANCE by HEART&SOUL: reactive glazes in FROST, MATCHA and SMOKE. Coupe plates, bowls and platters, every piece one of a kind.",
       header: "/collections/balance-header.webp",
-      catalogPage: 20,
+      catalogPage: 19,
       articles: [
         {
           color: "Frost",
@@ -152,7 +152,7 @@ export const collections: Collection[] = [
       metaEn:
         "PINE by HEART&SOUL: embossed tableware in five glaze colors from ALMOND to COAL. For brunch, pasta and bowls with style.",
       header: "/collections/pine-header.webp",
-      catalogPage: 38,
+      catalogPage: 37,
       articles: [
         {
           color: "Almond",
