@@ -38,6 +38,24 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Über die Marke -->
+  <url>
+    <loc>https://heartandsoul-90u.pages.dev/ueber-die-marke/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://heartandsoul-90u.pages.dev/ueber-die-marke/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://heartandsoul-90u.pages.dev/en/ueber-die-marke/"/>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://heartandsoul-90u.pages.dev/en/ueber-die-marke/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://heartandsoul-90u.pages.dev/ueber-die-marke/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://heartandsoul-90u.pages.dev/en/ueber-die-marke/"/>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- Kollektion: Flow -->
   <url>
     <loc>https://heartandsoul-90u.pages.dev/kollektionen/flow/</loc>

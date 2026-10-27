@@ -29,6 +29,19 @@ export const ui = {
       "HEART&SOUL bringt frischen Wind in die moderne Gastronomie: trendy, unkompliziert und voller Emotion. Bunte Glasuren und natürliche Texturen bringen gute Laune auf jeden Tisch, ob Street Food, Brunch oder regionale Klassiker. Geschirr ohne Schnickschnack, das einfach passt.",
     "about.cta": "Mehr zur Marke",
 
+    "brand.heroAlt": "HEART&SOUL Geschirr mit Desserts auf rosa gedecktem Tisch",
+    "brand.storyHeading": "Love at first sight",
+    "brand.storyBody":
+      "Gutes Geschirr sollte dir das Leben leichter machen, nicht schwerer. Genau dafür ist HEART&SOUL da: unkompliziertes Geschirr für die moderne Gastronomie, von Café über Brunch bis Bar. Farben und Formen, die sich frei kombinieren lassen und zu fast jedem Gericht passen. Du musst kein Konzept planen, du legst einfach los. Das sieht gut aus, bringt gute Laune an den Tisch und tut deinem Budget nicht weh.",
+    "brand.articlesAlt": "Übersicht der HEART&SOUL Geschirrteile",
+    "brand.mixHeading": "Mix & Match",
+    "brand.mixBody":
+      "Mix & Match ist bei HEART&SOUL Prinzip, nicht Zufall. Unsere Kollektionen sind zum Kombinieren gemacht: Farben und Formen, die dir einfach gefallen. Misch, was dir gefällt, und bau dir dein Table-Setting nach Lust und Gericht. Ein Teller, viele Looks, und jeder Tisch bekommt gute Laune.",
+    "brand.mixImageAlt": "Gedeckter Tisch mit Steak, Süßkartoffel-Pommes und HEART&SOUL Geschirr",
+    "brand.mixCta": "Mehr Inspiration auf Instagram",
+    "brand.videoHeading": "Neuheiten",
+    "brand.videoTitle": "HEART&SOUL Neuheiten Video",
+
     "collections.eyebrow": "Kollektionen",
     "collections.title": "Kollektionen",
     "collections.heading": "Finde deine Lieblingskollektion",
@@ -128,6 +141,19 @@ export const ui = {
     "about.body":
       "HEART&SOUL brings a fresh breeze to modern hospitality: trendy, uncomplicated and full of emotion. Colorful glazes and natural textures bring good vibes to every table, whether street food, brunch or regional classics. Tableware without the frills that simply fits.",
     "about.cta": "More about the brand",
+
+    "brand.heroAlt": "HEART&SOUL tableware with desserts on a pink table",
+    "brand.storyHeading": "Love at first sight",
+    "brand.storyBody":
+      "Good tableware should make your life easier, not harder. That's exactly what HEART&SOUL is for: uncomplicated tableware for modern hospitality, from café to brunch to bar. Colors and shapes that combine freely and suit almost any dish. You don't need to plan a concept, you just get started. It looks great, brings good vibes to the table and goes easy on your budget.",
+    "brand.articlesAlt": "Overview of HEART&SOUL tableware pieces",
+    "brand.mixHeading": "Mix & Match",
+    "brand.mixBody":
+      "Mix & match is a principle at HEART&SOUL, not a coincidence. Our collections are made to be combined: colors and shapes you simply love. Mix whatever you like and build your table setting to suit your mood and your menu. One plate, many looks, and every table gets good vibes.",
+    "brand.mixImageAlt": "Table set with steak, sweet potato fries and HEART&SOUL tableware",
+    "brand.mixCta": "More inspiration on Instagram",
+    "brand.videoHeading": "What's new",
+    "brand.videoTitle": "HEART&SOUL new arrivals video",
 
     "collections.eyebrow": "Collections",
     "collections.title": "Collections",

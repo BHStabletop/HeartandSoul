@@ -1,6 +1,6 @@
 ---
 import Button from "./hso/Button.astro";
-import { getLangFromUrl, useTranslations } from "../i18n/ui";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/ui";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -9,7 +9,7 @@ const t = useTranslations(lang);
 <section id="about" class="hso-section hso-about">
   <h2>{t("about.heading")}</h2>
   <p>{t("about.body")}</p>
-  <Button href="#values" minWidth={220}>{t("about.cta")}</Button>
+  <Button href={getLocalizedPath("/ueber-die-marke", lang)} minWidth={220}>{t("about.cta")}</Button>
 </section>
 
 <style>

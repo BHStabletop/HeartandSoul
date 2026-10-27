@@ -1,0 +1,143 @@
+---
+import Button from "./hso/Button.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const heroSrc = lang === "de" ? "/brand-hero-de.webp" : "/brand-hero-en.webp";
+const instagramUrl = "https://www.instagram.com/bhs.tabletop/";
+---
+
+<!-- Hero: the organic bottom curve and the "Über die Marke" blob are baked
+     into the artwork, so no CSS clip is needed here. -->
+<section class="brand-hero">
+  <img src={heroSrc} alt={t("brand.heroAlt")} fetchpriority="high" />
+</section>
+
+<!-- Love at first sight -->
+<section class="hso-section brand-story">
+  <h1>{t("brand.storyHeading")}</h1>
+  <p>{t("brand.storyBody")}</p>
+</section>
+
+<!-- Article overview (dishware on mint blob, baked into the artwork) -->
+<section class="hso-section brand-articles">
+  <img src="/brand-articles.webp" alt={t("brand.articlesAlt")} loading="lazy" />
+</section>
+
+<!-- Mix & Match -->
+<section class="hso-section brand-mix">
+  <div class="brand-mix__image">
+    <img src="/brand-mixmatch.webp" alt={t("brand.mixImageAlt")} loading="lazy" />
+  </div>
+  <div class="brand-mix__text">
+    <h2>{t("brand.mixHeading")}</h2>
+    <p>{t("brand.mixBody")}</p>
+    <Button href={instagramUrl} target="_blank" rel="noopener noreferrer" minWidth={260}>
+      {t("brand.mixCta")}
+    </Button>
+  </div>
+</section>
+
+<style>
+  .brand-hero {
+    position: relative;
+    /* Pull up under the transparent sticky header, like the homepage hero. */
+    margin-top: -110px;
+  }
+  @media (min-width: 900px) {
+    .brand-hero {
+      margin-top: -135px;
+    }
+  }
+  .brand-hero img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Love at first sight — centred intro block */
+  .brand-story {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+  }
+  .brand-story h1 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+    max-width: 780px;
+  }
+  .brand-story p {
+    max-width: 640px;
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
+    margin: 0;
+  }
+
+  /* Article overview image */
+  .brand-articles {
+    display: flex;
+    justify-content: center;
+    padding-top: clamp(16px, 2vw, 32px);
+    padding-bottom: clamp(16px, 2vw, 32px);
+  }
+  .brand-articles img {
+    width: min(900px, 100%);
+    height: auto;
+    display: block;
+  }
+
+  /* Mix & Match */
+  .brand-mix {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+  .brand-mix__image {
+    display: flex;
+    justify-content: center;
+  }
+  .brand-mix__image img {
+    width: min(480px, 100%);
+    height: auto;
+    display: block;
+  }
+  .brand-mix__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    max-width: 539px;
+    text-align: left;
+  }
+  .brand-mix__text h2 {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-lh);
+    color: var(--hso-white);
+    margin: 0;
+  }
+  .brand-mix__text p {
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--fw-core-light);
+    color: var(--hso-white);
+    margin: 0;
+  }
+
+  @media (min-width: 900px) {
+    .brand-mix {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 90px;
+    }
+  }
+</style>
