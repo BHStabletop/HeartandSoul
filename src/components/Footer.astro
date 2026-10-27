@@ -41,11 +41,20 @@ const year = new Date().getFullYear();
       <a href={`${getLocalizedPath("/", lang)}#contact`} class="hso-footer__link">{t("nav.contact")}</a>
       <a href={getLocalizedPath("/impressum", lang)} class="hso-footer__link">{t("footer.impressum")}</a>
       <a href={getLocalizedPath("/datenschutz", lang)} class="hso-footer__link">{t("footer.datenschutz")}</a>
+      <button type="button" class="hso-footer__link" data-cookie-settings>{t("footer.cookieSettings")}</button>
     </nav>
 
     <p class="hso-footer__copy">&copy;{year} BHS tabletop AG</p>
   </div>
 </footer>
+
+<script>
+  // Reopen the cookie banner so visitors can change or withdraw their consent
+  // at any time (Art. 7(3) GDPR). The banner listens for this event.
+  document.querySelector("[data-cookie-settings]")?.addEventListener("click", () => {
+    window.dispatchEvent(new Event("cookie-consent:open"));
+  });
+</script>
 
 <style>
   /* ---------- Blob with a table crop (homepage only) ---------- */
