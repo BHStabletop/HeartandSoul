@@ -5,12 +5,23 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 // Privacy-friendly embed (youtube-nocookie) to match the site's consent model.
+// Only displayed when user has accepted cookies
 const videoId = "TkQyIPEEdGs";
 const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
 ---
 
-<section class="hso-section brand-video">
+<section class="hso-section brand-video" data-video-container>
   <h2>{t("brand.videoHeading")}</h2>
+
+  <!-- Placeholder shown when cookies not accepted -->
+  <div class="brand-video__placeholder">
+    <div class="brand-video__message">
+      <p>🎬 Dieses Video wird nur angezeigt, wenn du Cookies akzeptiert hast.</p>
+      <p class="brand-video__privacy">Durch das Abspielen akzeptierst du die YouTube-Datenschutzerklärung.</p>
+    </div>
+  </div>
+
+  <!-- Video shown when cookies accepted -->
   <div class="brand-video__frame">
     <iframe
       src={embedUrl}
@@ -37,6 +48,43 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
     color: var(--hso-white);
     margin: 0;
   }
+
+  /* Placeholder for when cookies not accepted */
+  .brand-video__placeholder {
+    display: none;
+    position: relative;
+    width: min(900px, 100%);
+    aspect-ratio: 16 / 9;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+    background: linear-gradient(135deg, var(--hso-green-deep), rgba(0, 100, 0, 0.6));
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .brand-video[data-consent="rejected"] .brand-video__placeholder {
+    display: flex;
+  }
+
+  .brand-video__message {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .brand-video__message p {
+    margin: 8px 0;
+    font-size: 1rem;
+  }
+
+  .brand-video__privacy {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 16px;
+  }
+
+  /* Video container */
   .brand-video__frame {
     position: relative;
     width: min(900px, 100%);
@@ -45,6 +93,11 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
     overflow: hidden;
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
   }
+
+  .brand-video[data-consent="rejected"] .brand-video__frame {
+    display: none;
+  }
+
   .brand-video__frame iframe {
     position: absolute;
     inset: 0;
@@ -54,3 +107,29 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
     display: block;
   }
 </style>
+
+<script>
+  function initBrandVideo() {
+    const container = document.querySelector('[data-video-container]');
+    if (!container) return;
+
+    function updateVideoConsent() {
+      try {
+        const consent = localStorage.getItem("cookie-consent");
+        if (consent === "accepted") {
+          container.removeAttribute("data-consent");
+        } else {
+          container.setAttribute("data-consent", "rejected");
+        }
+      } catch (e) {}
+    }
+
+    // Update on load
+    updateVideoConsent();
+
+    // Update when consent changes
+    window.addEventListener("cookie-consent-updated", updateVideoConsent);
+  }
+
+  initBrandVideo();
+</script>

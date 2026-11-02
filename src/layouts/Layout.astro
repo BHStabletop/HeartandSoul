@@ -24,11 +24,15 @@ const { title = t("site.title"), description = t("site.description") } = Astro.p
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
-    <script is:inline>
+    <!-- Consent Mode v2 & GTM - load only when user consents -->
+    <script is:inline define:vars={{ GTM_ID }}>
+      // Initialize dataLayer and Consent Mode FIRST
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
+
+      // Set consent to DENIED by default (no tracking until user consents)
       gtag("consent", "default", {
         ad_storage: "denied",
         ad_user_data: "denied",
@@ -36,40 +40,65 @@ const { title = t("site.title"), description = t("site.description") } = Astro.p
         analytics_storage: "denied",
         wait_for_update: 500,
       });
-      try {
-        if (localStorage.getItem("cookie-consent") === "accepted") {
-          gtag("consent", "update", { analytics_storage: "granted" });
+
+      // Only load GTM if user has ALREADY consented (on return visits)
+      function loadGTMIfConsented() {
+        try {
+          const consent = localStorage.getItem("cookie-consent");
+          if (consent === "accepted") {
+            // Update consent to GRANTED
+            gtag("consent", "update", { analytics_storage: "granted" });
+            // Load GTM script only if not already loaded
+            if (!document.querySelector(`script[src*="googletagmanager"]`)) {
+              (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+                var f = d.getElementsByTagName(s)[0],
+                  j = d.createElement(s),
+                  dl = l != "dataLayer" ? "&l=" + l : "";
+                j.async = true;
+                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+                f.parentNode.insertBefore(j, f);
+              })(window, document, "script", "dataLayer", GTM_ID);
+            }
+          }
+        } catch (e) {
+          // localStorage might be disabled - consent remains denied
         }
-      } catch (e) {}
+      }
+
+      // IMPORTANT: Only load GTM on page load IF already consented
+      loadGTMIfConsented();
+
+      // Listen for user consent changes and load GTM when they accept
+      window.addEventListener("cookie-consent-updated", (e) => {
+        loadGTMIfConsented();
+      });
     </script>
 
-    <!-- Google Tag Manager -->
-    <script is:inline define:vars={{ GTM_ID }}>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", GTM_ID);
+    <!-- Google Fonts - only load if user consented -->
+    <script is:inline>
+      function loadGoogleFonts() {
+        try {
+          const consent = localStorage.getItem("cookie-consent");
+          if (consent === "accepted" && !document.querySelector('link[href*="fonts.googleapis.com"]')) {
+            // Load Inter font from Google Fonts
+            const link = document.createElement("link");
+            link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
+            link.rel = "stylesheet";
+            document.head.appendChild(link);
+          }
+        } catch (e) {}
+      }
+
+      // Load fonts immediately if already consented
+      loadGoogleFonts();
+
+      // Also load when user consents
+      window.addEventListener("cookie-consent-updated", loadGoogleFonts);
     </script>
-    <!-- End Google Tag Manager -->
   </head>
   <body class="font-sans antialiased">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript>
-      <iframe
-        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden"
-      ></iframe>
-    </noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
     <slot />
     <CookieBanner />
   </body>
