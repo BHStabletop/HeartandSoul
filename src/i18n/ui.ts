@@ -19,6 +19,7 @@ export const ui = {
     "nav.contact": "Kontakt",
     "nav.cta": "Kontakt aufnehmen",
     "nav.menu": "Menü öffnen",
+    "nav.bhsTabletop": "BHS tabletop",
 
     "hero.imageAlt": "HEART&SOUL Geschirr auf gedecktem Tisch",
     "hero.headline": "Love at<br />first sight",
@@ -132,6 +133,7 @@ export const ui = {
     "nav.contact": "Contact",
     "nav.cta": "Get in touch",
     "nav.menu": "Open menu",
+    "nav.bhsTabletop": "BHS tabletop",
 
     "hero.imageAlt": "HEART&SOUL tableware on a set table",
     "hero.headline": "Love at<br />first sight",

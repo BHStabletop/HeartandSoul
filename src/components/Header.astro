@@ -7,10 +7,16 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const homePath = getLocalizedPath("/", lang);
 
+// BHS tabletop link (external, language-specific)
+const bhsTabletopUrl = lang === "de"
+  ? "https://www.bhs-tabletop.com/de-de/"
+  : "https://www.bhs-tabletop.com/en-en/";
+
 const links = [
   { href: getLocalizedPath("/kollektionen", lang), label: t("nav.collections") },
   { href: getLocalizedPath("/ueber-die-marke", lang), label: t("nav.about") },
   { href: `${homePath}#contact`, label: t("nav.contact") },
+  { href: bhsTabletopUrl, label: t("nav.bhsTabletop"), external: true },
 ];
 ---
 
@@ -21,7 +27,14 @@ const links = [
 
   <nav class="hso-header__nav">
     {links.map((link) => (
-      <a href={link.href} class="hso-navlink">{link.label}</a>
+      <a
+        href={link.href}
+        class="hso-navlink"
+        target={link.external ? "_blank" : undefined}
+        rel={link.external ? "noopener noreferrer" : undefined}
+      >
+        {link.label}
+      </a>
     ))}
     <LanguageSwitch />
   </nav>
@@ -33,7 +46,14 @@ const links = [
 
 <nav class="hso-header__mobile" id="hso-mobile-nav">
   {links.map((link) => (
-    <a href={link.href} class="hso-navlink">{link.label}</a>
+    <a
+      href={link.href}
+      class="hso-navlink"
+      target={link.external ? "_blank" : undefined}
+      rel={link.external ? "noopener noreferrer" : undefined}
+    >
+      {link.label}
+    </a>
   ))}
   <LanguageSwitch />
 </nav>
