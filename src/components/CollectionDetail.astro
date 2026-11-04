@@ -480,14 +480,15 @@ const variantTeaser = (a: (typeof articles)[number]) =>
     height: 48px;
     border: 0;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.30);
+    background: none;
     color: var(--hso-white);
     cursor: pointer;
-    transition: background var(--dur-fast) var(--ease-soft);
+    transition: opacity var(--dur-fast) var(--ease-soft);
     z-index: 2;
+    opacity: 0.85;
   }
   .hso-cd-carousel__nav--next:hover {
-    background: rgba(0, 0, 0, 0.55);
+    opacity: 1;
   }
 
   /* Above 1280px: contained layout with padding */

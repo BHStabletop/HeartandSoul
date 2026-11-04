@@ -11,7 +11,7 @@ export const ui = {
   de: {
     "site.title": "HEART&SOUL | Love at first sight",
     "site.description":
-      "HEART&SOUL ist buntes Gastro-Geschirr, das einfach passt. Entdecke FLOW, BALANCE, PINE, MIRAGE, SOULMATE und PERFECT MATCH für Café, Brunch und Street Food.",
+      "HEART&SOUL ist buntes Gastro-Geschirr, das einfach passt. Entdecke Flow, Balance, Pine, Mirage, Soulmate und Perfect Match für Café, Brunch und Street Food.",
 
     "nav.home": "Startseite",
     "nav.collections": "Kollektionen",
@@ -125,7 +125,7 @@ export const ui = {
   en: {
     "site.title": "HEART&SOUL | Love at first sight",
     "site.description":
-      "HEART&SOUL is colorful tableware for modern hospitality that simply fits. Discover FLOW, BALANCE, PINE, MIRAGE, SOULMATE and PERFECT MATCH for cafés, brunch and street food.",
+      "HEART&SOUL is colorful tableware for modern hospitality that simply fits. Discover Flow, Balance, Pine, Mirage, Soulmate and Perfect Match for cafés, brunch and street food.",
 
     "nav.home": "Home",
     "nav.collections": "Collections",

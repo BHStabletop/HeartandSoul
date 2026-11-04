@@ -41,7 +41,7 @@ export interface Collection {
 export const collections: Collection[] = [
   {
     slug: "flow",
-    name: "FLOW",
+    name: "Flow",
     image: "/collections/flow.png",
     urlDe: "https://www.bhs-tabletop.com/de-de/heartandsoul/flow",
     urlEn: "https://www.bhs-tabletop.com/en-en/heartandsoul/flow",
@@ -82,7 +82,7 @@ export const collections: Collection[] = [
   },
   {
     slug: "balance",
-    name: "BALANCE",
+    name: "Balance",
     image: "/collections/balance.png",
     urlDe: "https://www.bhs-tabletop.com/de-de/heartandsoul/balance",
     urlEn: "https://www.bhs-tabletop.com/en-en/heartandsoul/balance",
@@ -135,7 +135,7 @@ export const collections: Collection[] = [
   },
   {
     slug: "pine",
-    name: "PINE",
+    name: "Pine",
     image: "/collections/pine.png",
     urlDe: "https://www.bhs-tabletop.com/de-de/heartandsoul/pine",
     urlEn: "https://www.bhs-tabletop.com/en-en/heartandsoul/pine",
@@ -204,7 +204,7 @@ export const collections: Collection[] = [
   },
   {
     slug: "mirage",
-    name: "MIRAGE",
+    name: "Mirage",
     image: "/collections/mirage.png",
     urlDe: "https://www.bhs-tabletop.com/de-de/heartandsoul/mirage",
     urlEn: "https://www.bhs-tabletop.com/en-en/heartandsoul/mirage",
@@ -228,7 +228,7 @@ export const collections: Collection[] = [
   },
   {
     slug: "soulmate",
-    name: "SOULMATE",
+    name: "Soulmate",
     image: "/collections/soulmate.png",
     urlDe: "https://www.bhs-tabletop.com/de-de/heartandsoul/soulmate",
     urlEn: "https://www.bhs-tabletop.com/en-en/heartandsoul/soulmate",
@@ -269,7 +269,7 @@ export const collections: Collection[] = [
   },
   {
     slug: "perfect-match",
-    name: "PERFECT MATCH",
+    name: "Perfect Match",
     image: "/collections/perfect-match.png",
     urlDe: "https://www.bhs-tabletop.com/de-de/heartandsoul/perfect-match",
     urlEn: "https://www.bhs-tabletop.com/en-en/heartandsoul/perfect-match",
@@ -330,7 +330,7 @@ export const collections: Collection[] = [
   },
   {
     slug: "add-on",
-    name: "ADD-ON",
+    name: "Add-on",
     image: "/collections/add-on.png",
     urlDe: "https://www.bhs-tabletop.com/de-de/heartandsoul/add-on",
     urlEn: "https://www.bhs-tabletop.com/en-en/heartandsoul/add-on",
