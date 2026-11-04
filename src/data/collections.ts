@@ -321,7 +321,11 @@ export const collections: Collection[] = [
             "PERFECT MATCH THYME brings fresh energy to the table and puts nature's green right next to your muesli or salad.",
         },
       ],
-      moods: ["/collections/perfect-match-mood-1.webp", "/collections/perfect-match-mood-2.webp"],
+      moods: [
+        "/collections/perfect-match-mood-1.webp",
+        "/collections/perfect-match-mood-2.webp",
+        "/collections/perfect-match-mood-3.webp",
+      ],
     },
   },
   {
