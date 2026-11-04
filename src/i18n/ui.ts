@@ -112,7 +112,7 @@ export const ui = {
     "catalog.zoomAlt": "Katalog Seite",
     "catalog.close": "Schließen",
 
-    "collectionDetail.setHeading": "Das Set im Überblick",
+    "collectionDetail.setHeading": "Die Kollektion im Überblick",
     "collectionDetail.inActionHeading": "See it in action",
     "collectionDetail.shopCta": "Jetzt entdecken",
     "collectionDetail.productCta": "Zur Produktübersicht",

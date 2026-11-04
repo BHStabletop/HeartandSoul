@@ -33,7 +33,7 @@ const heroAlt =
     ? `${name} Geschirr von HEART&SOUL auf gedecktem Tisch`
     : `${name} tableware by HEART&SOUL on a set table`;
 const setSuffix = lang === "de" ? "Geschirr-Set" : "tableware set";
-const singleSuffix = lang === "de" ? "Geschirr-Set im Überblick" : "tableware set";
+const singleSuffix = lang === "de" ? "Kollektion im Überblick" : "collection at a glance";
 const singleColor = articles[0]?.color ? ` ${articles[0].color.toUpperCase()}` : "";
 const variantTeaser = (a: (typeof articles)[number]) =>
   (lang === "de" ? a.teaserDe : a.teaserEn) ?? "";
