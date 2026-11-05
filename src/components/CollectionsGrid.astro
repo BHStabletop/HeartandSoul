@@ -36,10 +36,10 @@ const t = useTranslations(lang);
     /* Pull up under the transparent sticky header so the image is full-bleed
        to the very top and the logo/menu overlay it (homepage hero style). */
     margin-top: -110px;
-    height: min(74vw, 620px);
-    min-height: 320px;
+    /* Same height as the "Über die Marke" hero: full width, height from the
+       artwork's aspect ratio (organic bottom curve is baked into the image). */
+    aspect-ratio: 2000 / 1667;
     overflow: hidden;
-    border-radius: 0 0 62% 42% / 0 0 8% 6%;
   }
   @media (min-width: 900px) {
     .hso-kollhero {
